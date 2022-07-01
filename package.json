@@ -1,0 +1,68 @@
+{
+  "name": "algolia-analyzer",
+  "version": "0.0.1",
+  "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel watch src/manifest.json --host localhost --target webext-dev --hmr-port 3000",
+    "build": "yarn clean && parcel build src/manifest.json --target webext-prod",
+    "zip": "cd dist/webext-prod && bestzip algolia-analyzer.zip *",
+    "clean": "rimraf .parcel-cache dist",
+    "lint": "eslint --ext js,ts,tsx src"
+  },
+  "targets": {
+    "webext-dev": {
+      "sourceMap": {
+        "inline": true,
+        "inlineSources": true
+      }
+    },
+    "webext-prod": {}
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@algolia/client-search": "^4.13.1",
+    "@algolia/eslint-plugin-satellite": "^2.0.0",
+    "@algolia/satellite": "1.0.0-beta.133",
+    "@parcel/config-webextension": "^2.6.2",
+    "@parcel/validator-typescript": "^2.6.2",
+    "@types/chrome": "^0.0.191",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "algoliasearch": "^4.13.1",
+    "autoprefixer": "^10.4.7",
+    "bestzip": "^2.2.1",
+    "classnames": "^2.3.1",
+    "eslint": "^8.18.0",
+    "eslint-config-algolia": "^20.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-import-resolver-typescript": "^3.1.3",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-jsdoc": "^39.3.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lodash": "^4.17.21",
+    "parcel": "^2.6.2",
+    "postcss": "^8.4.14",
+    "prettier": "^2.7.1",
+    "process": "^0.11.10",
+    "react-feather": "^2.0.10",
+    "react-json-view": "^1.21.3",
+    "rimraf": "^3.0.2",
+    "tailwindcss": "^3.1.4",
+    "typescript": "^4.7.4",
+    "zod": "^3.17.3"
+  },
+  "alias": {
+    "components": "./src/components",
+    "content": "./src/content",
+    "models": "./src/models",
+    "pages": "./src/pages",
+    "utils": "./src/utils"
+  }
+}
