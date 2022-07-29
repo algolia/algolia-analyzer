@@ -1,4 +1,4 @@
-import { IconButton, Sidebar } from '@algolia/satellite';
+import { IconButton } from '@algolia/satellite';
 import cx from 'classnames';
 import { type FC, type ReactNode, useCallback, useEffect, useState } from 'react';
 import { Slash, X } from 'react-feather';
@@ -125,11 +125,10 @@ export const Page: FC = () => {
             <AclCheck />
             <RequestsGrid requests={requests} />
           </section>
-          <Sidebar
-            variant="light"
+          <aside
             className={cx(
               sidebarContent ? '!w-1/2' : '!w-0',
-              'transition-width flex flex-col items-start overflow-y-auto'
+              'bg-white display-body border-r border-grey-200/50 transition-width flex flex-col items-start overflow-y-auto'
             )}
           >
             <IconButton
@@ -140,7 +139,7 @@ export const Page: FC = () => {
               onClick={closeSidebar}
             />
             {sidebarContent}
-          </Sidebar>
+          </aside>
         </div>
       </main>
     </SidebarContext.Provider>
