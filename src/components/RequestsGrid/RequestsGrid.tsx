@@ -30,12 +30,9 @@ const generalOptionsKey = 'default-general-options';
 const urlOptionsKey = 'default-url-options';
 
 const ReverseTagInfo: FC = () => (
-  <>
-    {/* @ts-expect-error React 18 */}
-    <TooltipWrapper content='You can click on a selected tag below to reverse the filter effect. It will then be marked with a leading exclamation mark "!".'>
-      <HelpCircle className="w-3 h-3 text-grey-700" />
-    </TooltipWrapper>
-  </>
+  <TooltipWrapper content='You can click on a selected tag below to reverse the filter effect. It will then be marked with a leading exclamation mark "!".'>
+    <HelpCircle className="w-3 h-3 text-grey-700" />
+  </TooltipWrapper>
 );
 
 export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
@@ -296,7 +293,6 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
                     setSelectedUrlOptions((options as UrlOption[]) ?? [])
                   }
                 />
-                {/* @ts-expect-error React 18 */}
                 <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
                   <Button
                     variant="primary"
