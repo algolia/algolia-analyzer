@@ -1,4 +1,4 @@
-import { IconButton } from '@algolia/satellite';
+import { IconButton, ContentTabs } from '@algolia/satellite';
 import cx from 'classnames';
 import { type FC, type ReactNode, useCallback, useEffect, useState } from 'react';
 import { Slash, X } from 'react-feather';
@@ -118,12 +118,17 @@ export const Page: FC = () => {
           <section
             className={cx(
               sidebarContent ? 'w-1/2' : 'w-full',
-              'transition-width pt-2 space-y-8 overflow-y-auto',
+              'm-2 transition-width pt-2 space-y-8 overflow-y-auto',
               sidebarContent ? 'sidebar-opened' : 'sidebar-closed'
             )}
           >
-            <AclCheck />
-            <RequestsGrid requests={requests} />
+            <ContentTabs
+              className="mx-[calc(0.5rem+3px)] flex justify-center mb-4"
+              tabs={[
+                { label: 'Network', content: <RequestsGrid requests={requests} /> },
+                { label: 'Tools', content: <AclCheck /> },
+              ]}
+            />
           </section>
           <aside
             className={cx(

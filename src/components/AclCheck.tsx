@@ -38,7 +38,7 @@ export const AclCheck: FC = () => {
   }, [appId, apiKey]);
 
   return (
-    <Card className="m-2 space-y-2">
+    <Card className="mx-2 mb-2 space-y-2">
       <div className="flex items-center space-x-2">
         <div>Check ACL: </div>
         <Input

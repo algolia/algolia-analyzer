@@ -242,7 +242,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
   );
 
   return (
-    <Card fullBleed={true} className="w-[calc(100%-1rem)] m-2">
+    <Card fullBleed={true} className="w-[calc(100%-1rem)] mx-2 mb-2">
       <div>
         <table className="stl-table-with-highlight stl-table table-fixed">
           <thead>
