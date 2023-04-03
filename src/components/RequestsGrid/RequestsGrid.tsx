@@ -273,36 +273,38 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
                   }
                 />
               </th>
-              <th className="flex space-x-2 items-baseline">
-                <AutoComplete
-                  className="grow"
-                  multiple={true}
-                  options={urlOptions}
-                  value={selectedUrlOptions}
-                  optionItemComponent={({ option, ...args }): JSX.Element => (
-                    <UrlOptionItemComponent {...args} option={option as UrlOption} />
-                  )}
-                  renderValueTemplate={(args): JSX.Element => (
-                    <UrlOptionItemComponent
-                      {...args}
-                      deleteOption={deleteUrlOption}
-                      reverseOption={reverseUrlOption}
-                    />
-                  )}
-                  onChange={(options): void =>
-                    setSelectedUrlOptions((options as UrlOption[]) ?? [])
-                  }
-                />
-                <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
-                  <Button
-                    variant="primary"
-                    loading={isSaving}
-                    disabled={!canSaveOptions}
-                    onClick={saveDefaultOptions}
-                  >
-                    Save
-                  </Button>
-                </TooltipWrapper>
+              <th>
+                <div className="flex space-x-2 items-baseline">
+                  <AutoComplete
+                    className="grow"
+                    multiple={true}
+                    options={urlOptions}
+                    value={selectedUrlOptions}
+                    optionItemComponent={({ option, ...args }): JSX.Element => (
+                      <UrlOptionItemComponent {...args} option={option as UrlOption} />
+                    )}
+                    renderValueTemplate={(args): JSX.Element => (
+                      <UrlOptionItemComponent
+                        {...args}
+                        deleteOption={deleteUrlOption}
+                        reverseOption={reverseUrlOption}
+                      />
+                    )}
+                    onChange={(options): void =>
+                      setSelectedUrlOptions((options as UrlOption[]) ?? [])
+                    }
+                  />
+                  <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
+                    <Button
+                      variant="primary"
+                      loading={isSaving}
+                      disabled={!canSaveOptions}
+                      onClick={saveDefaultOptions}
+                    >
+                      Save
+                    </Button>
+                  </TooltipWrapper>
+                </div>
               </th>
             </tr>
           </thead>
