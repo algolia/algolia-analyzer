@@ -14,7 +14,7 @@ import { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { HelpCircle, Search } from 'react-feather';
 
 import { useSidebar } from 'components/SidebarContent';
-import { getLocalStorageValue, setLocalStorageValue, type Request } from 'utils';
+import { getLocalStorageValue, setLocalStorageValue, type Request, type ApiType } from 'utils';
 
 import type { GeneralOption } from './GeneralOption';
 import { GeneralOptionItemComponent } from './GeneralOption';
@@ -120,6 +120,19 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
       );
     }
 
+    const selectedApis: ApiType[] = selectedUrlOptions
+      .filter((o) => o.type === 'api' && !o.reversed)
+      .map((o) => (o.value ?? null) as ApiType);
+    const reversedSelectedApis: ApiType[] = selectedUrlOptions
+      .filter((o) => o.type === 'api' && o.reversed)
+      .map((o) => (o.value ?? null) as ApiType);
+    if (selectedApis.length > 0) {
+      filteredRequests = filteredRequests.filter((r) => selectedApis.includes(r.api));
+    }
+    if (reversedSelectedApis.length > 0) {
+      filteredRequests = filteredRequests.filter((r) => !reversedSelectedApis.includes(r.api));
+    }
+
     const selectedIndices: Array<string | null> = selectedUrlOptions
       .filter((o) => o.type === 'index' && !o.reversed)
       .map((o) => (o.value ?? null) as string | null);
@@ -187,6 +200,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
     const clusters = uniq(selectedRequests.map((r) => r.cluster));
     const indices = uniq(selectedRequests.map((r) => r.index));
     const apiSubPaths = uniq(selectedRequests.map((r) => r.apiSubPath));
+    const apis = uniq(selectedRequests.map((r) => r.api)).filter((a) => a !== 'search');
     return concat<UrlOption>(
       clusters.map((cluster) => ({
         value: cluster,
@@ -204,6 +218,12 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
         value: apiSubPath ?? '',
         label: apiSubPath ?? 'no API path',
         type: 'apiSubPath',
+        reversed: false,
+      })),
+      apis.map((api) => ({
+        value: api,
+        label: api,
+        type: 'api',
         reversed: false,
       }))
     );

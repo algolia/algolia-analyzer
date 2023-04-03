@@ -2,7 +2,14 @@ import cx from 'classnames';
 import { type FC, useCallback } from 'react';
 
 import { useSidebar } from 'components/SidebarContent';
-import { ApiSubPathTag, ClusterTag, IndexTag, MethodTag, StatusCodeTag } from 'components/Tags';
+import {
+  ApiSubPathTag,
+  ClusterTag,
+  IndexTag,
+  ApiTag,
+  MethodTag,
+  StatusCodeTag,
+} from 'components/Tags';
 import type { Request } from 'utils';
 
 interface LineProps {
@@ -10,7 +17,7 @@ interface LineProps {
 }
 
 export const RequestLine: FC<LineProps> = ({ request }) => {
-  const { id, method, statusCode, time, url, cluster, apiSubPath, index } = request;
+  const { id, method, statusCode, time, url, cluster, apiSubPath, index, api } = request;
   const { selectedLine, setSelectedLine } = useSidebar();
 
   const onClick = useCallback(() => {
@@ -35,6 +42,7 @@ export const RequestLine: FC<LineProps> = ({ request }) => {
         )}
       >
         {cluster && <ClusterTag cluster={cluster} />}
+        {api && api !== 'search' && <ApiTag api={api} />}
         {index && <IndexTag index={index} />}
         {apiSubPath && <ApiSubPathTag apiSubPath={apiSubPath} />}
         <span title={decodeURIComponent(url)} className="px-1">

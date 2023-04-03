@@ -8,15 +8,20 @@ import { RequestsGrid } from 'components/RequestsGrid';
 import { SidebarContent, SidebarContext } from 'components/SidebarContent';
 import { requestBody } from 'models/RequestBody';
 import { responseBody } from 'models/ResponseBody';
-import { urlPattern, type Request, safeJsonParse, requestHeaderFilter } from 'utils';
+import { urlPattern, type Request, safeJsonParse, requestHeaderFilter, type ApiType } from 'utils';
 
 type UrlData = Pick<
   Request,
-  'apiPath' | 'apiSubPath' | 'cluster' | 'index' | 'queryStringParameters'
+  'api' | 'apiPath' | 'apiSubPath' | 'cluster' | 'index' | 'queryStringParameters'
 >;
 
 const getUrlData = (url: URL): UrlData => {
-  const apiPath = url.pathname;
+  let apiPath = url.pathname;
+  let api: ApiType = 'search';
+  if (apiPath.startsWith('/merchandising')) {
+    api = 'merchandising';
+    apiPath = url.pathname.split('/merchandising')[1];
+  }
   const [_, ...apiPathParts] = apiPath.split('/');
 
   const queryStringParameters: Record<string, string> = {};
@@ -30,6 +35,7 @@ const getUrlData = (url: URL): UrlData => {
 
   return {
     cluster: url.hostname.split('.')[0],
+    api,
     apiPath,
     apiSubPath:
       apiPathParts.length >= 3 ? apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`) : null,

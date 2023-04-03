@@ -2,10 +2,11 @@ import type { Option } from '@algolia/satellite';
 import cx from 'classnames';
 import type { FC, MouseEventHandler } from 'react';
 
-import { ApiSubPathTag, ClusterTag, type CustomTagProps, IndexTag } from 'components/Tags';
+import { ApiSubPathTag, ClusterTag, type CustomTagProps, IndexTag, ApiTag } from 'components/Tags';
+import { type ApiType } from 'utils';
 
 export interface UrlOption extends Option {
-  type: 'apiSubPath' | 'cluster' | 'index';
+  type: 'api' | 'apiSubPath' | 'cluster' | 'index';
   reversed: boolean;
 }
 
@@ -42,6 +43,8 @@ export const UrlOptionItemComponent: FC<UrlOptionItemComponentProps> = ({
       return <IndexTag {...props} index={option.value as string | null} />;
     case 'apiSubPath':
       return <ApiSubPathTag {...props} apiSubPath={option.value as string | null} />;
+    case 'api':
+      return <ApiTag {...props} api={option.value as ApiType} />;
     default:
       return null;
   }

@@ -1,6 +1,8 @@
 import { Tag, type TagVariants, type TagProps } from '@algolia/satellite';
 import type { FC } from 'react';
 
+import { type ApiType } from 'utils';
+
 export type CustomTagProps = Omit<TagProps, 'ref'> & { reversed?: boolean };
 
 const getStatusColor = (statusCode: number): TagVariants => {
@@ -63,5 +65,17 @@ export const ApiSubPathTag: FC<CustomTagProps & { apiSubPath: string | null }> =
   <Tag {...props} variant="pink" title="api path">
     {reversed && '!'}
     {apiSubPath || 'no API path'}
+  </Tag>
+);
+
+const apiString: Record<ApiType, string> = {
+  search: 'search',
+  merchandising: 'merch',
+};
+
+export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (
+  <Tag {...props} variant="orange" title="merchandising">
+    {reversed && '!'}
+    {apiString[api]}
   </Tag>
 );
