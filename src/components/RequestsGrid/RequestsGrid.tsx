@@ -271,7 +271,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
         <table className="stl-table-with-highlight stl-table table-fixed">
           <thead>
             <tr className="capitalize">
-              <th className={cx('!font-bold', selectedLine === undefined && 'w-72')}>
+              <th className={cx('!font-bold', selectedLine === undefined && 'w-48')}>
                 general <ReverseTagInfo />
               </th>
               <th className="!font-bold">
