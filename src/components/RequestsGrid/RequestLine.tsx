@@ -17,7 +17,8 @@ interface LineProps {
 }
 
 export const RequestLine: FC<LineProps> = ({ request }) => {
-  const { id, method, statusCode, time, url, cluster, apiSubPath, index, api } = request;
+  const { id, method, statusCode, time, url, displayableUrl, cluster, apiSubPath, index, api } =
+    request;
   const { selectedLine, setSelectedLine } = useSidebar();
 
   const onClick = useCallback(() => {
@@ -45,9 +46,11 @@ export const RequestLine: FC<LineProps> = ({ request }) => {
         {api && api !== 'search' && <ApiTag api={api} />}
         {index && <IndexTag index={index} />}
         {apiSubPath && <ApiSubPathTag apiSubPath={apiSubPath} />}
-        <span title={decodeURIComponent(url)} className="px-1">
-          {decodeURI(url)}
-        </span>
+        {!selectedLine && (
+          <span title={decodeURIComponent(url)} className="px-1">
+            {displayableUrl}
+          </span>
+        )}
       </td>
     </tr>
   );

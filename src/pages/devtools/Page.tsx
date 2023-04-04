@@ -19,7 +19,13 @@ import {
 
 type UrlData = Pick<
   Request,
-  'api' | 'apiPath' | 'apiSubPath' | 'cluster' | 'index' | 'queryStringParameters'
+  | 'api'
+  | 'apiPath'
+  | 'apiSubPath'
+  | 'cluster'
+  | 'displayableUrl'
+  | 'index'
+  | 'queryStringParameters'
 >;
 
 const getUrlData = (url: URL): UrlData => {
@@ -69,7 +75,9 @@ const getUrlData = (url: URL): UrlData => {
     }
   }
 
-  return { cluster, api, apiPath, apiSubPath, index, queryStringParameters };
+  const displayableUrl = `${url.host}${url.pathname}`;
+
+  return { cluster, api, apiPath, apiSubPath, displayableUrl, index, queryStringParameters };
 };
 
 export const Page: FC = () => {

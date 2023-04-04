@@ -4,6 +4,7 @@ export interface Request {
   id: string;
   method: string;
   url: string;
+  displayableUrl: string;
   time: number;
   cluster?: string;
   api: ApiType;
