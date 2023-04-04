@@ -112,11 +112,13 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
       .filter((o) => o.type === 'cluster' && o.reversed)
       .map((o) => o.value as string);
     if (selectedClusters.length > 0) {
-      filteredRequests = filteredRequests.filter((r) => selectedClusters.includes(r.cluster));
+      filteredRequests = filteredRequests.filter(
+        (r) => r.cluster && selectedClusters.includes(r.cluster)
+      );
     }
     if (reversedSelectedClusters.length > 0) {
       filteredRequests = filteredRequests.filter(
-        (r) => !reversedSelectedClusters.includes(r.cluster)
+        (r) => !r.cluster || !reversedSelectedClusters.includes(r.cluster)
       );
     }
 
@@ -197,7 +199,9 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
   }, [selectedRequests]);
 
   const urlOptions: UrlOption[] = useMemo(() => {
-    const clusters = uniq(selectedRequests.map((r) => r.cluster));
+    const clusters = uniq(
+      selectedRequests.filter((r) => r.cluster).map((r) => r.cluster)
+    ) as string[];
     const indices = uniq(selectedRequests.map((r) => r.index));
     const apiSubPaths = uniq(selectedRequests.map((r) => r.apiSubPath));
     const apis = uniq(selectedRequests.map((r) => r.api)).filter((a) => a !== 'search');

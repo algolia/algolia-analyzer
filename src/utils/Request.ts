@@ -5,7 +5,7 @@ export interface Request {
   method: string;
   url: string;
   time: number;
-  cluster: string;
+  cluster?: string;
   api: ApiType;
   apiPath: string;
   apiSubPath: string | null;
