@@ -1,4 +1,4 @@
-export type ApiType = 'merchandising' | 'search';
+export type ApiType = 'analytics' | 'merchandising' | 'search';
 
 export interface Request {
   id: string;

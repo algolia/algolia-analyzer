@@ -69,6 +69,7 @@ export const ApiSubPathTag: FC<CustomTagProps & { apiSubPath: string | null }> =
 );
 
 const apiString: Record<ApiType, string> = {
+  analytics: 'analytics',
   search: 'search',
   merchandising: 'merch',
 };
