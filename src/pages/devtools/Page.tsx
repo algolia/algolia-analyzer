@@ -8,7 +8,14 @@ import { RequestsGrid } from 'components/RequestsGrid';
 import { SidebarContent, SidebarContext } from 'components/SidebarContent';
 import { requestBody } from 'models/RequestBody';
 import { responseBody } from 'models/ResponseBody';
-import { urlPattern, type Request, safeJsonParse, requestHeaderFilter, type ApiType } from 'utils';
+import {
+  urlPattern,
+  type Request,
+  safeJsonParse,
+  requestHeaderFilter,
+  type ApiType,
+  urlPattern2,
+} from 'utils';
 
 type UrlData = Pick<
   Request,
@@ -21,6 +28,8 @@ const getUrlData = (url: URL): UrlData => {
   if (apiPath.startsWith('/merchandising')) {
     api = 'merchandising';
     apiPath = url.pathname.split('/merchandising')[1];
+  } else if (url.host.startsWith('analytics.')) {
+    api = 'analytics';
   }
   const [_, ...apiPathParts] = apiPath.split('/');
 
@@ -33,15 +42,34 @@ const getUrlData = (url: URL): UrlData => {
     }
   }
 
-  return {
-    cluster: url.hostname.split('.')[0],
-    api,
-    apiPath,
-    apiSubPath:
-      apiPathParts.length >= 3 ? apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`) : null,
-    index: apiPathParts[1] === 'indexes' && apiPathParts.length >= 3 ? apiPathParts[2] : null,
-    queryStringParameters,
-  };
+  let cluster: string | undefined = url.hostname.split('.')[0];
+  if (cluster.includes('-staging')) {
+    cluster = 'staging';
+  } else if (cluster === 'analytics') {
+    cluster = apiPathParts.length >= 1 && apiPathParts[0] === 'unstable' ? 'unstable' : undefined;
+  }
+
+  let apiSubPath = null;
+  let index = null;
+  if (apiPathParts.length >= 3 && ['search', 'merchandising'].includes(api)) {
+    if (apiPathParts.length > 3) {
+      apiSubPath = apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`);
+    }
+    if (apiPathParts[1] === 'indexes') {
+      index = apiPathParts[2];
+    }
+  } else if (apiPathParts.length >= 1) {
+    if (
+      apiPathParts.length > 1 &&
+      (!isNaN(parseInt(apiPathParts[0], 10)) || apiPathParts[0] === 'unstable')
+    ) {
+      apiSubPath = apiPathParts.slice(1).reduce((a, b) => `${a}/${b}`);
+    } else {
+      apiSubPath = apiPathParts.reduce((a, b) => `${a}/${b}`);
+    }
+  }
+
+  return { cluster, api, apiPath, apiSubPath, index, queryStringParameters };
 };
 
 export const Page: FC = () => {
@@ -58,7 +86,7 @@ export const Page: FC = () => {
   }, []);
 
   const onRequestFinishedListener = useCallback((details: chrome.devtools.network.Request) => {
-    if (!urlPattern.test(details.request.url)) {
+    if (!urlPattern.test(details.request.url) && !urlPattern2.test(details.request.url)) {
       return;
     }
 
