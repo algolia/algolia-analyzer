@@ -318,16 +318,18 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
                       setSelectedUrlOptions((options as UrlOption[]) ?? [])
                     }
                   />
-                  <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
-                    <Button
-                      variant="primary"
-                      loading={isSaving}
-                      disabled={!canSaveOptions}
-                      onClick={saveDefaultOptions}
-                    >
-                      Save
-                    </Button>
-                  </TooltipWrapper>
+                  {selectedLine === undefined && (
+                    <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
+                      <Button
+                        variant="primary"
+                        loading={isSaving}
+                        disabled={!canSaveOptions}
+                        onClick={saveDefaultOptions}
+                      >
+                        Save
+                      </Button>
+                    </TooltipWrapper>
+                  )}
                 </div>
               </th>
             </tr>
