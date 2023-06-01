@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidebar-closed .stl-autocomplete-input {
+/* to avoid the request grid headers inputs to wrap */
+.stl-autocomplete-input {
   min-width: 5ch !important;
+}
+/* to avoid the request grid header second column input to overflow */
+tr th:nth-of-type(2) .stl-autocomplete-input {
+  width: 100%;
 }
