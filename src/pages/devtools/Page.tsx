@@ -28,6 +28,22 @@ type UrlData = Pick<
   | 'queryStringParameters'
 >;
 
+const getCluster = (hostname: string, api: ApiType, apiPathParts: string[]): string | undefined => {
+  const splitHostName = hostname.split('.');
+  let cluster: string | undefined = splitHostName[0];
+
+  if (cluster === api && splitHostName[1].length === 2) {
+    // gets country
+    cluster = splitHostName[1];
+  }
+  if (cluster.includes('-staging')) {
+    cluster = 'staging';
+  } else if (cluster === 'analytics') {
+    cluster = apiPathParts.length >= 1 && apiPathParts[0] === 'unstable' ? 'unstable' : undefined;
+  }
+  return cluster;
+};
+
 const getUrlData = (url: URL): UrlData => {
   let apiPath = url.pathname;
   let api: ApiType = 'search';
@@ -36,6 +52,8 @@ const getUrlData = (url: URL): UrlData => {
     apiPath = url.pathname.split('/merchandising')[1];
   } else if (url.host.startsWith('analytics.')) {
     api = 'analytics';
+  } else if (url.host.startsWith('automation')) {
+    api = 'automation';
   }
   const [_, ...apiPathParts] = apiPath.split('/');
 
@@ -48,18 +66,17 @@ const getUrlData = (url: URL): UrlData => {
     }
   }
 
-  let cluster: string | undefined = url.hostname.split('.')[0];
-  if (cluster.includes('-staging')) {
-    cluster = 'staging';
-  } else if (cluster === 'analytics') {
-    cluster = apiPathParts.length >= 1 && apiPathParts[0] === 'unstable' ? 'unstable' : undefined;
-  }
+  const cluster = getCluster(url.hostname, api, apiPathParts);
 
   let apiSubPath = null;
   let index = null;
-  if (apiPathParts.length >= 3 && ['search', 'merchandising'].includes(api)) {
+  if (apiPathParts.length >= 3 && ['search', 'merchandising', 'automation'].includes(api)) {
     if (apiPathParts.length > 3) {
       apiSubPath = apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`);
+      if (api === 'automation') {
+        index = apiPathParts[2];
+        apiSubPath = `${apiPathParts[1]}/${apiSubPath}`;
+      }
     }
     if (apiPathParts[1] === 'indexes') {
       index = apiPathParts[2];

@@ -70,12 +70,13 @@ export const ApiSubPathTag: FC<CustomTagProps & { apiSubPath: string | null }> =
 
 const apiString: Record<ApiType, string> = {
   analytics: 'analytics',
+  automation: 'automation',
   search: 'search',
   merchandising: 'merch',
 };
 
 export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (
-  <Tag {...props} variant="orange" title="merchandising">
+  <Tag {...props} variant="orange" title={apiString[api]}>
     {reversed && '!'}
     {apiString[api]}
   </Tag>
