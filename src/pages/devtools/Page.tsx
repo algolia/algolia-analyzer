@@ -54,6 +54,8 @@ const getUrlData = (url: URL): UrlData => {
     api = 'analytics';
   } else if (url.host.startsWith('automation')) {
     api = 'automation';
+  } else if (url.host.startsWith('query-categorization')) {
+    api = 'query-categorization';
   }
   const [_, ...apiPathParts] = apiPath.split('/');
 
@@ -70,15 +72,20 @@ const getUrlData = (url: URL): UrlData => {
 
   let apiSubPath = null;
   let index = null;
-  if (apiPathParts.length >= 3 && ['search', 'merchandising', 'automation'].includes(api)) {
+  if (
+    apiPathParts.length >= 3 &&
+    ['search', 'merchandising', 'automation', 'query-categorization'].includes(api)
+  ) {
     if (apiPathParts.length > 3) {
       apiSubPath = apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`);
       if (api === 'automation') {
         index = apiPathParts[2];
         apiSubPath = `${apiPathParts[1]}/${apiSubPath}`;
       }
-    }
-    if (apiPathParts[1] === 'indexes') {
+    } else if (api === 'query-categorization') {
+      index = apiPathParts[2];
+      apiSubPath = apiPathParts[1];
+    } else if (apiPathParts[1] === 'indexes') {
       index = apiPathParts[2];
     }
   } else if (apiPathParts.length >= 1) {
