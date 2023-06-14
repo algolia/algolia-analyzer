@@ -1,4 +1,9 @@
-export type ApiType = 'analytics' | 'automation' | 'merchandising' | 'search';
+export type ApiType =
+  | 'analytics'
+  | 'automation'
+  | 'merchandising'
+  | 'query-categorization'
+  | 'search';
 
 export interface Request {
   id: string;

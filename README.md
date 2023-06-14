@@ -34,3 +34,15 @@ Then, you can go into **chrome** and import it:
 - you might need to restart your browser for the new `⏱️ Algolia Analyzer` tab to appear in your devtools
 
 Alternatively for an dev experience with file watching, you can run `yarn start` (instead of `yarn build`) and load the folder `./dist/webext-dev`
+
+## how to implement support for a new API
+- in `utils/Requests.ts`, add a new value in `ApiType`
+  - this is the internal name of the API
+- this will require you to also update `components/Tags` > `apiString`
+  - this is how the API will be displayed in the tags
+- in `utils/constants.ts`, update either `urlPattern` of `urlPattern2`
+  - these are the patterns used to catch requests
+  - if you need to add a new pattern, don't forget to:
+    - update this documentation
+    - update the code that depends on those pattern to handle this new one
+- finally, `pages/devtools/Page.tsx` > `getUrlData` is where the tags are extracted from the url

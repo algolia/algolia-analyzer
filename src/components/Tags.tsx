@@ -73,6 +73,7 @@ const apiString: Record<ApiType, string> = {
   automation: 'automation',
   search: 'search',
   merchandising: 'merch',
+  'query-categorization': 'queryCat',
 };
 
 export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (
