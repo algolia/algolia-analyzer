@@ -169,7 +169,7 @@ export const Page: FC = () => {
   return (
     <SidebarContext.Provider value={{ selectedLine, setSelectedLine }}>
       <main className="h-screen flex flex-col text-grey-900">
-        <header className="h-12 sticky flex items-center top-0 left-0 w-full bg-white stl-card-z200 space-x-2 p-2 z-10">
+        <header className="h-12 sticky flex items-center top-0 left-0 w-full bg-white stl-card-z200 space-x-2 p-2 z-30">
           <IconButton
             icon={Slash}
             variant="subtle"
@@ -199,16 +199,18 @@ export const Page: FC = () => {
           <aside
             className={cx(
               sidebarContent ? '!w-1/2' : '!w-0',
-              'bg-white display-body border-r border-grey-200/50 transition-width flex flex-col items-start overflow-y-auto'
+              'relative bg-white display-body border-r border-grey-200/50 transition-width flex flex-col items-start overflow-y-auto'
             )}
           >
-            <IconButton
-              icon={X}
-              size="small"
-              variant="subtle"
-              title="close panel"
-              onClick={closeSidebar}
-            />
+            <div className="sticky top-0 w-full bg-white z-20">
+              <IconButton
+                icon={X}
+                size="small"
+                variant="subtle"
+                title="close panel"
+                onClick={closeSidebar}
+              />
+            </div>
             {sidebarContent}
           </aside>
         </div>
