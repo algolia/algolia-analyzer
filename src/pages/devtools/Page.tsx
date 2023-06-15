@@ -1,4 +1,4 @@
-import { IconButton, ContentTabs } from '@algolia/satellite';
+import { IconButton, ContentTabs, stl } from '@algolia/satellite';
 import cx from 'classnames';
 import { type FC, type ReactNode, useCallback, useEffect, useState } from 'react';
 import { Slash, X } from 'react-feather';
@@ -169,7 +169,7 @@ export const Page: FC = () => {
   return (
     <SidebarContext.Provider value={{ selectedLine, setSelectedLine }}>
       <main className="h-screen flex flex-col text-grey-900">
-        <header className="h-12 sticky flex items-center top-0 left-0 w-full bg-white stl-card-z200 space-x-2 p-2 z-10">
+        <header className="h-12 sticky flex items-center top-0 left-0 w-full bg-white stl-card-z200 space-x-2 p-2 z-30">
           <IconButton
             icon={Slash}
             variant="subtle"
@@ -184,12 +184,12 @@ export const Page: FC = () => {
           <section
             className={cx(
               sidebarContent ? 'w-1/2' : 'w-full',
-              'm-2 transition-width pt-2 space-y-8 overflow-y-auto',
+              'transition-width space-y-8 overflow-y-auto',
               sidebarContent ? 'sidebar-opened' : 'sidebar-closed'
             )}
           >
             <ContentTabs
-              className="mx-[calc(0.5rem+3px)] flex justify-center mb-4"
+              className={`sticky top-0 z-10 pt-4 mb-4 px-[calc(0.5rem+3px)] flex justify-center bg-grey-100 ${stl`shadow-z100`}`}
               tabs={[
                 { label: 'Network', content: <RequestsGrid requests={requests} /> },
                 { label: 'Tools', content: <AclCheck /> },
@@ -199,16 +199,18 @@ export const Page: FC = () => {
           <aside
             className={cx(
               sidebarContent ? '!w-1/2' : '!w-0',
-              'bg-white display-body border-r border-grey-200/50 transition-width flex flex-col items-start overflow-y-auto'
+              'relative bg-white display-body border-r border-grey-200/50 transition-width flex flex-col items-start overflow-y-auto'
             )}
           >
-            <IconButton
-              icon={X}
-              size="small"
-              variant="subtle"
-              title="close panel"
-              onClick={closeSidebar}
-            />
+            <div className="sticky top-0 w-full bg-white z-20">
+              <IconButton
+                icon={X}
+                size="small"
+                variant="subtle"
+                title="close panel"
+                onClick={closeSidebar}
+              />
+            </div>
             {sidebarContent}
           </aside>
         </div>

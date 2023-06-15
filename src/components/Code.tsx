@@ -9,7 +9,7 @@ interface CodeProps {
 
 export const Code: FC<CodeProps> = ({ code, leftPadding = true }) =>
   code ? (
-    <div className={cx('py-2 break-all overflow-x-hidden', leftPadding && 'pl-6')}>
+    <div className={cx('py-2 break-all overflow-x-hidden bg-white', leftPadding && 'pl-6')}>
       <JsonView
         src={code as Record<string, unknown>}
         name={null}
