@@ -25,8 +25,13 @@ const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPa
   if (url.host.startsWith('automation')) {
     api = 'automation';
   }
+
   if (url.host.startsWith('query-categorization')) {
     api = 'query-categorization';
+  }
+
+  if (url.host.startsWith('insights')) {
+    api = 'insights';
   }
 
   if (cluster === api) {
@@ -75,10 +80,11 @@ const getIndexAndSubPath = (
       break;
     case 'query-categorization':
     case 'merchandising':
+    case 'insights':
     case 'automation': {
       const { array, item } = spliceItemAt(apiPathParts, 1, null);
       subPath = array.join('/');
-      index = item;
+      index = item ?? queryStringParameters.index ?? null;
       break;
     }
     case 'search': {
