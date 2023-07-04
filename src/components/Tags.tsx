@@ -57,14 +57,14 @@ export const IndexTag: FC<CustomTagProps & { index: string | null }> = ({
   </Tag>
 );
 
-export const ApiSubPathTag: FC<CustomTagProps & { apiSubPath: string | null }> = ({
-  apiSubPath,
+export const SubPathTag: FC<CustomTagProps & { subPath: string | null }> = ({
+  subPath,
   reversed,
   ...props
 }) => (
   <Tag {...props} variant="pink" title="api path">
     {reversed && '!'}
-    {apiSubPath || 'no API path'}
+    {subPath || 'no API path'}
   </Tag>
 );
 
