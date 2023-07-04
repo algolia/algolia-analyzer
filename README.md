@@ -53,4 +53,5 @@ Alternatively for an dev experience with file watching, you can run `yarn start`
   - if you need to add a new pattern, don't forget to:
     - update this documentation
     - update the code that depends on those pattern to handle this new one
-- finally, `pages/devtools/Page.tsx` > `getUrlData` is where the tags are extracted from the url
+- finally, `utils/getUrlData.ts` is where the tags are extracted from the url
+  - please add tests in `utils\__tests__\getUrlData.test.ts` for any new API you implement
