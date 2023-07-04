@@ -43,7 +43,7 @@ export const RequestLine: FC<LineProps> = ({ request }) => {
         )}
       >
         {cluster && <ClusterTag cluster={cluster} />}
-        {api && api !== 'search' && <ApiTag api={api} />}
+        {api && <ApiTag api={api} />}
         {index && <IndexTag index={index} />}
         {subPath && <SubPathTag subPath={subPath} />}
         {!selectedLine && (

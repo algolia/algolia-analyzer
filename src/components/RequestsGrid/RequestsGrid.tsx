@@ -204,7 +204,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
     ) as string[];
     const indices = uniq(selectedRequests.map((r) => r.index));
     const subPaths = uniq(selectedRequests.map((r) => r.subPath));
-    const apis = uniq(selectedRequests.map((r) => r.api)).filter((a) => a !== 'search');
+    const apis = uniq(selectedRequests.map((r) => r.api));
     return concat<UrlOption>(
       clusters.map((cluster) => ({
         value: cluster,
