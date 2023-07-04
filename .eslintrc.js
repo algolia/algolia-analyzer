@@ -19,6 +19,7 @@ module.exports = {
     },
   },
   rules: {
+    '@typescript-eslint/indent': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -27,8 +28,15 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        format: ['PascalCase'],
+        selector: 'interface',
+      },
+    ],
     'no-console': ['error', { allow: ['info'] }],
-    'prettier/prettier': ['error', { printWidth: 100, singleQuote: true, endOfLine: 'auto' }],
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
   },
   overrides: [

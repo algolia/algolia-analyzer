@@ -156,24 +156,24 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
       );
     }
 
-    const selectedApiSubPaths: Array<string | null> = selectedUrlOptions
+    const selectedSubPaths: Array<string | null> = selectedUrlOptions
       .filter((o) => o.type === 'apiSubPath' && !o.reversed)
       .map((o) => (o.value ?? null) as string | null);
-    const reversedSelectedApiSubPaths: Array<string | null> = selectedUrlOptions
+    const reversedSelectedSubPaths: Array<string | null> = selectedUrlOptions
       .filter((o) => o.type === 'apiSubPath' && o.reversed)
       .map((o) => (o.value ?? null) as string | null);
-    if (selectedApiSubPaths.length > 0) {
+    if (selectedSubPaths.length > 0) {
       filteredRequests = filteredRequests.filter(
         (r) =>
-          (!r.apiSubPath && selectedApiSubPaths.find((i) => !i) !== undefined) || // selected apiSubPath is "no apiSupPath"
-          selectedApiSubPaths.includes(r.apiSubPath)
+          (!r.subPath && selectedSubPaths.find((i) => !i) !== undefined) || // selected subPath is "no apiSupPath"
+          selectedSubPaths.includes(r.subPath)
       );
     }
-    if (reversedSelectedApiSubPaths.length > 0) {
+    if (reversedSelectedSubPaths.length > 0) {
       filteredRequests = filteredRequests.filter((r) =>
-        !r.apiSubPath
-          ? reversedSelectedApiSubPaths.find((i) => !i) === undefined // selected apiSubPath is !"no apiSupPath"
-          : !reversedSelectedApiSubPaths.includes(r.apiSubPath)
+        !r.subPath
+          ? reversedSelectedSubPaths.find((i) => !i) === undefined // selected subPath is !"no apiSupPath"
+          : !reversedSelectedSubPaths.includes(r.subPath)
       );
     }
     return filteredRequests;
@@ -203,8 +203,8 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
       selectedRequests.filter((r) => r.cluster).map((r) => r.cluster)
     ) as string[];
     const indices = uniq(selectedRequests.map((r) => r.index));
-    const apiSubPaths = uniq(selectedRequests.map((r) => r.apiSubPath));
-    const apis = uniq(selectedRequests.map((r) => r.api)).filter((a) => a !== 'search');
+    const subPaths = uniq(selectedRequests.map((r) => r.subPath));
+    const apis = uniq(selectedRequests.map((r) => r.api));
     return concat<UrlOption>(
       clusters.map((cluster) => ({
         value: cluster,
@@ -218,9 +218,9 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
         type: 'index',
         reversed: false,
       })),
-      apiSubPaths.map((apiSubPath) => ({
-        value: apiSubPath ?? '',
-        label: apiSubPath ?? 'no API path',
+      subPaths.map((subPath) => ({
+        value: subPath ?? '',
+        label: subPath ?? 'no API path',
         type: 'apiSubPath',
         reversed: false,
       })),
