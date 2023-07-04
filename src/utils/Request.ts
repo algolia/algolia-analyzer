@@ -1,6 +1,7 @@
 export type ApiType =
   | 'analytics'
   | 'automation'
+  | 'insights'
   | 'merchandising'
   | 'query-categorization'
   | 'search';

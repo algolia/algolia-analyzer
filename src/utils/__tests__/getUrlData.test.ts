@@ -298,4 +298,28 @@ describe('getUrlData', () => {
       });
     });
   });
+
+  describe('insights', () => {
+    it('/metrics', () => {
+      expect(
+        getUrlData(
+          new URL(
+            'https://insights.de.algolia.io/1/metrics?startDate=2023-04-06T00:00:00.000Z&endDate=2023-07-04T23:59:59.999Z&granularity=day&index=products'
+          )
+        )
+      ).toEqual({
+        api: 'insights',
+        cluster: 'de',
+        subPath: 'metrics',
+        index: 'products',
+        queryStringParameters: {
+          startDate: '2023-04-06T00:00:00.000Z',
+          endDate: '2023-07-04T23:59:59.999Z',
+          granularity: 'day',
+          index: 'products',
+        },
+        displayableUrl: 'insights.de.algolia.io/1/metrics',
+      });
+    });
+  });
 });
