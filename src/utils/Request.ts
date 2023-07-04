@@ -13,8 +13,7 @@ export interface Request {
   time: number;
   cluster?: string;
   api: ApiType;
-  apiPath: string;
-  apiSubPath: string | null;
+  subPath: string | null;
   index: string | null;
   queryStringParameters: Record<string, string>;
   requestBody: unknown | undefined;

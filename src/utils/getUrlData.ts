@@ -1,0 +1,121 @@
+import type { ApiType, Request } from './Request';
+import { spliceItemAt } from './spliceItemAt';
+
+export type UrlData = Pick<
+  Request,
+  'api' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters' | 'subPath'
+>;
+
+const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPath: string } => {
+  const splitHostName = url.hostname.split('.');
+  let cluster: string | undefined = splitHostName[0];
+  const country: string | undefined = splitHostName[1];
+  let api: ApiType = 'search';
+  let apiPath = url.pathname;
+
+  if (url.pathname.startsWith('/merchandising')) {
+    api = 'merchandising';
+    apiPath = url.pathname.split('/merchandising')[1];
+  }
+
+  if (url.host.startsWith('analytics.')) {
+    api = 'analytics';
+  }
+
+  if (url.host.startsWith('automation')) {
+    api = 'automation';
+  }
+  if (url.host.startsWith('query-categorization')) {
+    api = 'query-categorization';
+  }
+
+  if (cluster === api) {
+    cluster = country;
+  }
+
+  if (cluster.includes('-staging')) {
+    cluster = 'staging';
+  }
+
+  return { api, apiPath, cluster };
+};
+
+const getQueryStringParameters = (searchParams: URLSearchParams): Record<string, string> => {
+  const queryStringParameters: Record<string, string> = {};
+  const parameters = Array.from(searchParams.keys());
+  for (const parameter of parameters) {
+    const value = searchParams.get(parameter);
+    if (value !== null) {
+      queryStringParameters[parameter] = value;
+    }
+  }
+  return queryStringParameters;
+};
+
+const getIndexAndSubPath = (
+  api: ApiType,
+  apiPath: string,
+  searchParams: URLSearchParams
+): Pick<UrlData, 'index' | 'queryStringParameters' | 'subPath'> => {
+  const queryStringParameters = getQueryStringParameters(searchParams);
+
+  const [_slash, version, ...apiPathParts] = apiPath.split('/');
+  if (isNaN(parseInt(version, 10)) && version !== 'unstable') {
+    apiPathParts.unshift(version);
+  }
+
+  let subPath: UrlData['subPath'] = apiPathParts.join('/');
+  let index: UrlData['index'] = null;
+
+  switch (api) {
+    case 'analytics':
+      if (queryStringParameters.index) {
+        index = queryStringParameters.index;
+      }
+      break;
+    case 'query-categorization':
+    case 'merchandising':
+    case 'automation': {
+      const { array, item } = spliceItemAt(apiPathParts, 1, null);
+      subPath = array.join('/');
+      index = item;
+      break;
+    }
+    case 'search': {
+      const { array, item } = spliceItemAt(apiPathParts, 1, null);
+      // don't show 'indexes' in subPath unless it's the only subPath
+      if (array[0] === 'indexes' && array.length > 1) {
+        array.splice(0, 1);
+      }
+      if (array[0] === 'rules' && array[1] !== 'search') {
+        array.splice(1);
+        array.push('{id}');
+      }
+      subPath = array.join('/');
+      index = item;
+      break;
+    }
+    default:
+      break;
+  }
+
+  return { index, subPath, queryStringParameters };
+};
+
+export const getUrlData = (url: URL): UrlData => {
+  const { api, cluster, apiPath } = getApiPathCluster(url);
+  const { index, subPath, queryStringParameters } = getIndexAndSubPath(
+    api,
+    apiPath,
+    url.searchParams
+  );
+
+  return {
+    api,
+    cluster,
+    subPath,
+    displayableUrl: `${url.host}${url.pathname}`,
+    index,
+    queryStringParameters,
+  };
+};

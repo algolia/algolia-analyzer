@@ -13,96 +13,9 @@ import {
   type Request,
   safeJsonParse,
   requestHeaderFilter,
-  type ApiType,
   urlPattern2,
+  getUrlData,
 } from 'utils';
-
-type UrlData = Pick<
-  Request,
-  | 'api'
-  | 'apiPath'
-  | 'apiSubPath'
-  | 'cluster'
-  | 'displayableUrl'
-  | 'index'
-  | 'queryStringParameters'
->;
-
-const getCluster = (hostname: string, api: ApiType, apiPathParts: string[]): string | undefined => {
-  const splitHostName = hostname.split('.');
-  let cluster: string | undefined = splitHostName[0];
-
-  if (cluster === api && splitHostName[1].length === 2) {
-    // gets country
-    cluster = splitHostName[1];
-  }
-  if (cluster.includes('-staging')) {
-    cluster = 'staging';
-  } else if (cluster === 'analytics') {
-    cluster = apiPathParts.length >= 1 && apiPathParts[0] === 'unstable' ? 'unstable' : undefined;
-  }
-  return cluster;
-};
-
-const getUrlData = (url: URL): UrlData => {
-  let apiPath = url.pathname;
-  let api: ApiType = 'search';
-  if (apiPath.startsWith('/merchandising')) {
-    api = 'merchandising';
-    apiPath = url.pathname.split('/merchandising')[1];
-  } else if (url.host.startsWith('analytics.')) {
-    api = 'analytics';
-  } else if (url.host.startsWith('automation')) {
-    api = 'automation';
-  } else if (url.host.startsWith('query-categorization')) {
-    api = 'query-categorization';
-  }
-  const [_, ...apiPathParts] = apiPath.split('/');
-
-  const queryStringParameters: Record<string, string> = {};
-  const parameters = Array.from(url.searchParams.keys());
-  for (const parameter of parameters) {
-    const value = url.searchParams.get(parameter);
-    if (value !== null) {
-      queryStringParameters[parameter] = value;
-    }
-  }
-
-  const cluster = getCluster(url.hostname, api, apiPathParts);
-
-  let apiSubPath = null;
-  let index = null;
-  if (
-    apiPathParts.length >= 3 &&
-    ['search', 'merchandising', 'automation', 'query-categorization'].includes(api)
-  ) {
-    if (apiPathParts.length > 3) {
-      apiSubPath = apiPathParts.slice(3).reduce((a, b) => `${a}/${b}`);
-      if (api === 'automation') {
-        index = apiPathParts[2];
-        apiSubPath = `${apiPathParts[1]}/${apiSubPath}`;
-      }
-    } else if (api === 'query-categorization') {
-      index = apiPathParts[2];
-      apiSubPath = apiPathParts[1];
-    } else if (apiPathParts[1] === 'indexes') {
-      index = apiPathParts[2];
-    }
-  } else if (apiPathParts.length >= 1) {
-    if (
-      apiPathParts.length > 1 &&
-      (!isNaN(parseInt(apiPathParts[0], 10)) || apiPathParts[0] === 'unstable')
-    ) {
-      apiSubPath = apiPathParts.slice(1).reduce((a, b) => `${a}/${b}`);
-    } else {
-      apiSubPath = apiPathParts.reduce((a, b) => `${a}/${b}`);
-    }
-  }
-
-  const displayableUrl = `${url.host}${url.pathname}`;
-
-  return { cluster, api, apiPath, apiSubPath, displayableUrl, index, queryStringParameters };
-};
 
 export const Page: FC = () => {
   const [sidebarContent, setSidebarContent] = useState<ReactNode>(null);
