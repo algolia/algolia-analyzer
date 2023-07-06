@@ -3,7 +3,7 @@ import { spliceItemAt } from './spliceItemAt';
 
 export type UrlData = Pick<
   Request,
-  'api' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters' | 'subPath'
+  'api' | 'apiSubPath' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters'
 >;
 
 const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPath: string } => {
@@ -61,7 +61,7 @@ const getIndexAndSubPath = (
   api: ApiType,
   apiPath: string,
   searchParams: URLSearchParams
-): Pick<UrlData, 'index' | 'queryStringParameters' | 'subPath'> => {
+): Pick<UrlData, 'apiSubPath' | 'index' | 'queryStringParameters'> => {
   const queryStringParameters = getQueryStringParameters(searchParams);
 
   const [_slash, version, ...apiPathParts] = apiPath.split('/');
@@ -69,7 +69,7 @@ const getIndexAndSubPath = (
     apiPathParts.unshift(version);
   }
 
-  let subPath: UrlData['subPath'] = apiPathParts.join('/');
+  let apiSubPath: UrlData['apiSubPath'] = apiPathParts.join('/');
   let index: UrlData['index'] = null;
 
   switch (api) {
@@ -83,7 +83,7 @@ const getIndexAndSubPath = (
     case 'insights':
     case 'automation': {
       const { array, item } = spliceItemAt(apiPathParts, 1, null);
-      subPath = array.join('/');
+      apiSubPath = array.join('/');
       index = item ?? queryStringParameters.index ?? null;
       break;
     }
@@ -97,7 +97,7 @@ const getIndexAndSubPath = (
         array.splice(1);
         array.push('{id}');
       }
-      subPath = array.join('/');
+      apiSubPath = array.join('/');
       index = item;
       break;
     }
@@ -105,12 +105,12 @@ const getIndexAndSubPath = (
       break;
   }
 
-  return { index, subPath, queryStringParameters };
+  return { index, apiSubPath, queryStringParameters };
 };
 
 export const getUrlData = (url: URL): UrlData => {
   const { api, cluster, apiPath } = getApiPathCluster(url);
-  const { index, subPath, queryStringParameters } = getIndexAndSubPath(
+  const { index, apiSubPath, queryStringParameters } = getIndexAndSubPath(
     api,
     apiPath,
     url.searchParams
@@ -119,7 +119,7 @@ export const getUrlData = (url: URL): UrlData => {
   return {
     api,
     cluster,
-    subPath,
+    apiSubPath,
     displayableUrl: `${url.host}${url.pathname}`,
     index,
     queryStringParameters,

@@ -3,7 +3,7 @@ import { type FC, useCallback } from 'react';
 
 import { useSidebar } from 'components/SidebarContent';
 import {
-  SubPathTag,
+  ApiSubPathTag,
   ClusterTag,
   IndexTag,
   ApiTag,
@@ -17,7 +17,7 @@ interface LineProps {
 }
 
 export const RequestLine: FC<LineProps> = ({ request }) => {
-  const { id, method, statusCode, time, url, displayableUrl, cluster, subPath, index, api } =
+  const { id, method, statusCode, time, url, displayableUrl, cluster, apiSubPath, index, api } =
     request;
   const { selectedLine, setSelectedLine } = useSidebar();
 
@@ -45,7 +45,7 @@ export const RequestLine: FC<LineProps> = ({ request }) => {
         {cluster && <ClusterTag cluster={cluster} />}
         {api && <ApiTag api={api} />}
         {index && <IndexTag index={index} />}
-        {subPath && <SubPathTag subPath={subPath} />}
+        {apiSubPath && <ApiSubPathTag subPath={apiSubPath} />}
         {!selectedLine && (
           <span title={decodeURIComponent(url)} className="px-1">
             {displayableUrl}

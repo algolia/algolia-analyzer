@@ -57,7 +57,7 @@ export const IndexTag: FC<CustomTagProps & { index: string | null }> = ({
   </Tag>
 );
 
-export const SubPathTag: FC<CustomTagProps & { subPath: string | null }> = ({
+export const ApiSubPathTag: FC<CustomTagProps & { subPath: string | null }> = ({
   subPath,
   reversed,
   ...props
