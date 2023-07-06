@@ -16,10 +16,9 @@ import { HelpCircle, Search } from 'react-feather';
 import { useSidebar } from 'components/SidebarContent';
 import { getLocalStorageValue, setLocalStorageValue, type Request, type ApiType } from 'utils';
 
-import type { GeneralOption } from './GeneralOption';
+import { type GeneralOption, type UrlOption } from './FilteringOption';
 import { GeneralOptionItemComponent } from './GeneralOption';
 import { RequestLine } from './RequestLine';
-import type { UrlOption } from './UrlOption';
 import { UrlOptionItemComponent } from './UrlOption';
 
 interface RequestsGridProps {

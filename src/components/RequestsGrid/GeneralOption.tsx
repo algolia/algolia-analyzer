@@ -1,13 +1,9 @@
-import type { Option } from '@algolia/satellite';
 import cx from 'classnames';
 import { type FC, type MouseEventHandler } from 'react';
 
 import { type CustomTagProps, MethodTag, StatusCodeTag } from 'components/Tags';
 
-export interface GeneralOption extends Option {
-  type: 'method' | 'statusCode';
-  reversed: boolean;
-}
+import { type GeneralOption } from './FilteringOption';
 
 interface GeneralOptionItemComponentProps {
   option: GeneralOption;
@@ -35,7 +31,7 @@ export const GeneralOptionItemComponent: FC<GeneralOptionItemComponentProps> = (
     onClick,
   };
 
-  switch ((option as GeneralOption).type) {
+  switch (option.type) {
     case 'method':
       return <MethodTag {...props} method={option.value as string} />;
     case 'statusCode':
