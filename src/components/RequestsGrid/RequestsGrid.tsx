@@ -164,15 +164,15 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
     if (selectedSubPaths.length > 0) {
       filteredRequests = filteredRequests.filter(
         (r) =>
-          (!r.subPath && selectedSubPaths.find((i) => !i) !== undefined) || // selected subPath is "no apiSupPath"
-          selectedSubPaths.includes(r.subPath)
+          (!r.apiSubPath && selectedSubPaths.find((i) => !i) !== undefined) || // selected subPath is "no apiSupPath"
+          selectedSubPaths.includes(r.apiSubPath)
       );
     }
     if (reversedSelectedSubPaths.length > 0) {
       filteredRequests = filteredRequests.filter((r) =>
-        !r.subPath
+        !r.apiSubPath
           ? reversedSelectedSubPaths.find((i) => !i) === undefined // selected subPath is !"no apiSupPath"
-          : !reversedSelectedSubPaths.includes(r.subPath)
+          : !reversedSelectedSubPaths.includes(r.apiSubPath)
       );
     }
     return filteredRequests;
@@ -202,7 +202,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
       selectedRequests.filter((r) => r.cluster).map((r) => r.cluster)
     ) as string[];
     const indices = uniq(selectedRequests.map((r) => r.index));
-    const subPaths = uniq(selectedRequests.map((r) => r.subPath));
+    const subPaths = uniq(selectedRequests.map((r) => r.apiSubPath));
     const apis = uniq(selectedRequests.map((r) => r.api));
     return concat<UrlOption>(
       clusters.map((cluster) => ({
