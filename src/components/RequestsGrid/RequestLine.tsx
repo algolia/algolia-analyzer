@@ -31,16 +31,13 @@ export const RequestLine: FC<LineProps> = ({ request }) => {
       className={cx('group', selectedLine?.id === id && 'bg-grey-100')}
       onClick={onClick}
     >
-      <td className="whitespace-nowrap space-x-1 group-hover:bg-grey-100">
+      <td className="space-x-1 leading-lg group-hover:bg-grey-100">
         <MethodTag method={method} />
         <StatusCodeTag statusCode={statusCode} />
         <span>{Math.round(time)} ms</span>
       </td>
       <td
-        className={cx(
-          'space-x-1 leading-lg group-hover:bg-grey-100',
-          selectedLine?.id !== id && 'truncate'
-        )}
+        className={cx('space-x-1 leading-lg group-hover:bg-grey-100', !selectedLine && 'truncate')}
       >
         {cluster && <ClusterTag cluster={cluster} />}
         {api && <ApiTag api={api} />}
