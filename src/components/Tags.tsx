@@ -53,7 +53,7 @@ export const IndexTag: FC<CustomTagProps & { index: string | null }> = ({
 }) => (
   <Tag {...props} variant="accent" title="index">
     {reversed && '!'}
-    {index ? <>index: {index}</> : 'no index'}
+    {index || 'no index'}
   </Tag>
 );
 
@@ -78,7 +78,7 @@ const apiString: Record<ApiType, string> = {
 };
 
 export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (
-  <Tag {...props} variant="orange" title={apiString[api]}>
+  <Tag {...props} variant="orange" title="API">
     {reversed && '!'}
     {apiString[api]}
   </Tag>
