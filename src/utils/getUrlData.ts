@@ -93,7 +93,7 @@ const getIndexAndSubPath = (
       if (array[0] === 'indexes' && array.length > 1) {
         array.splice(0, 1);
       }
-      if (array[0] === 'rules' && array[1] !== 'search') {
+      if (['rules', 'task'].includes(array[0]) && array[1] !== 'search') {
         array.splice(1);
         array.push('{id}');
       }

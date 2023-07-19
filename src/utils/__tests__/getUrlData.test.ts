@@ -90,6 +90,19 @@ describe('getUrlData', () => {
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/settings',
       });
     });
+
+    it('/indexes/*/task/{id}', () => {
+      expect(
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001'))
+      ).toEqual({
+        api: 'search',
+        cluster: 'f4t6cuv2ah',
+        apiSubPath: 'task/{id}',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001',
+      });
+    });
   });
 
   describe('analytics', () => {
