@@ -5,11 +5,14 @@ import JsonView from 'react-json-view';
 interface CodeProps {
   code?: unknown;
   leftPadding?: boolean;
+  className?: string;
 }
 
-export const Code: FC<CodeProps> = ({ code, leftPadding = true }) =>
+export const Code: FC<CodeProps> = ({ code, leftPadding = true, className }) =>
   code ? (
-    <div className={cx('py-2 break-all overflow-x-hidden bg-white', leftPadding && 'pl-6')}>
+    <div
+      className={cx('py-2 break-all overflow-x-hidden bg-white', leftPadding && 'pl-6', className)}
+    >
       <JsonView
         src={code as Record<string, unknown>}
         name={null}

@@ -9,9 +9,9 @@ interface SidebarProps {
   request: Request;
 }
 
-const stickyWrapper = 'sticky top-[calc(4rem+1px)] z-10 w-full';
 const stickyTitle =
-  'sticky border-t border-white top-[calc(4rem+1px)] z-10 h-10 pl-6 pr-2 flex items-center display-subheading uppercase text-white bg-grey-900';
+  'sticky border-t border-white top-[calc(4rem+1px)] z-10 min-h-10 w-full pl-6 pr-2 flex items-center display-subheading uppercase text-white bg-grey-900';
+const scrollingContent = 'table w-full';
 
 export const SidebarContent: FC<SidebarProps> = ({
   request: { requestHeaders, requestBody, responseBody, queryStringParameters, displayableUrl },
@@ -24,40 +24,40 @@ export const SidebarContent: FC<SidebarProps> = ({
       </h3>
     </div>
     {queryStringParameters && (
-      <div className={stickyWrapper}>
+      <>
         <h3 className={stickyTitle}>
           <Upload className="p-1 mr-2" />
           Query String Parameters
         </h3>
-        <Code code={queryStringParameters} />
-      </div>
+        <Code code={queryStringParameters} className={scrollingContent} />
+      </>
     )}
     {requestHeaders.length > 0 && (
-      <div className={stickyWrapper}>
+      <>
         <h3 className={stickyTitle}>
           <Upload className="p-1 mr-2" />
           Request Headers
         </h3>
-        <Code code={requestHeaders} />
-      </div>
+        <Code code={requestHeaders} className={scrollingContent} />
+      </>
     )}
     {requestBody && (
-      <div className={stickyWrapper}>
+      <>
         <h3 className={stickyTitle}>
           <Upload className="p-1 mr-2" />
           Request Body
         </h3>
-        <Code code={requestBody} />
-      </div>
+        <Code code={requestBody} className={scrollingContent} />
+      </>
     )}
     {responseBody && (
-      <div className={stickyWrapper}>
+      <>
         <h3 className={stickyTitle}>
           <Download className="p-1 mr-2" />
           Response Body
         </h3>
-        <Code code={responseBody} />
-      </div>
+        <Code code={responseBody} className={scrollingContent} />
+      </>
     )}
   </>
 );
