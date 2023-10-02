@@ -1,6 +1,6 @@
 {
   "name": "algolia-analyzer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
@@ -38,6 +38,7 @@
     "@types/node": "^18.6.2",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/parser": "^5.61.0",
     "algoliasearch": "^4.14.2",
     "autoprefixer": "^10.4.8",
     "bestzip": "^2.2.1",

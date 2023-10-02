@@ -6,7 +6,7 @@ describe('getUrlData', () => {
       expect(getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/*/top'))).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'top',
+        apiSubPath: 'top',
         index: '*',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/*/top',
@@ -19,7 +19,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'indexes',
+        apiSubPath: 'indexes',
         index: null,
         queryStringParameters: { prefix: 'products', page: '0' },
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes',
@@ -30,7 +30,7 @@ describe('getUrlData', () => {
       expect(getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/*/queries'))).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'queries',
+        apiSubPath: 'queries',
         index: '*',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/*/queries',
@@ -43,7 +43,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'rules/search',
+        apiSubPath: 'rules/search',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/rules/search',
@@ -58,7 +58,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'rules/{id}',
+        apiSubPath: 'rules/{id}',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/rules/qr-1676451640489',
@@ -71,7 +71,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'synonyms/search',
+        apiSubPath: 'synonyms/search',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/synonyms/search',
@@ -84,10 +84,23 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
-        subPath: 'settings',
+        apiSubPath: 'settings',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/settings',
+      });
+    });
+
+    it('/indexes/*/task/{id}', () => {
+      expect(
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001'))
+      ).toEqual({
+        api: 'search',
+        cluster: 'f4t6cuv2ah',
+        apiSubPath: 'task/{id}',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 'f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001',
       });
     });
   });
@@ -103,7 +116,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
-        subPath: 'tags',
+        apiSubPath: 'tags',
         index: 'products',
         queryStringParameters: {
           index: 'products',
@@ -121,7 +134,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
-        subPath: 'status',
+        apiSubPath: 'status',
         index: 'products',
         queryStringParameters: { index: 'products' },
         displayableUrl: 'analytics.de.algolia.com/2/status',
@@ -138,7 +151,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
-        subPath: 'categories/count',
+        apiSubPath: 'categories/count',
         index: 'products',
         queryStringParameters: {
           index: 'products',
@@ -160,7 +173,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
-        subPath: 'categories',
+        apiSubPath: 'categories',
         index: 'products',
         queryStringParameters: {
           index: 'products',
@@ -180,7 +193,7 @@ describe('getUrlData', () => {
       expect(getUrlData(new URL('https://analytics.de.algolia.com/2/abtests'))).toEqual({
         api: 'analytics',
         cluster: 'de',
-        subPath: 'abtests',
+        apiSubPath: 'abtests',
         index: null,
         queryStringParameters: {},
         displayableUrl: 'analytics.de.algolia.com/2/abtests',
@@ -195,7 +208,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
-        subPath: 'predictions-bins',
+        apiSubPath: 'predictions-bins',
         index: null,
         queryStringParameters: {},
         displayableUrl: 'query-categorization.de.algolia.com/1/predictions-bins',
@@ -206,7 +219,7 @@ describe('getUrlData', () => {
       expect(getUrlData(new URL('https://query-categorization.de.algolia.com/1/configs'))).toEqual({
         api: 'query-categorization',
         cluster: 'de',
-        subPath: 'configs',
+        apiSubPath: 'configs',
         index: null,
         queryStringParameters: {},
         displayableUrl: 'query-categorization.de.algolia.com/1/configs',
@@ -219,7 +232,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
-        subPath: 'status',
+        apiSubPath: 'status',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'query-categorization.de.algolia.com/1/status/products',
@@ -232,7 +245,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
-        subPath: 'taxonomy',
+        apiSubPath: 'taxonomy',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'query-categorization.de.algolia.com/1/taxonomy/products',
@@ -251,7 +264,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'merchandising',
         cluster: 'staging',
-        subPath: 'indexes/custom-rankings',
+        apiSubPath: 'indexes/custom-rankings',
         index: 'products',
         queryStringParameters: {},
         displayableUrl:
@@ -265,7 +278,7 @@ describe('getUrlData', () => {
       expect(getUrlData(new URL('https://automation.de.algolia.com/1/indices'))).toEqual({
         api: 'automation',
         cluster: 'de',
-        subPath: 'indices',
+        apiSubPath: 'indices',
         index: null,
         queryStringParameters: {},
         displayableUrl: 'automation.de.algolia.com/1/indices',
@@ -278,7 +291,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'automation',
         cluster: 'de',
-        subPath: 'synonyms/count',
+        apiSubPath: 'synonyms/count',
         index: 'products',
         queryStringParameters: {},
         displayableUrl: 'automation.de.algolia.com/1/synonyms/products/count',
@@ -291,7 +304,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'automation',
         cluster: 'de',
-        subPath: 'synonyms',
+        apiSubPath: 'synonyms',
         index: 'products',
         queryStringParameters: { status: 'pending' },
         displayableUrl: 'automation.de.algolia.com/1/synonyms/products',
@@ -310,7 +323,7 @@ describe('getUrlData', () => {
       ).toEqual({
         api: 'insights',
         cluster: 'de',
-        subPath: 'metrics',
+        apiSubPath: 'metrics',
         index: 'products',
         queryStringParameters: {
           startDate: '2023-04-06T00:00:00.000Z',

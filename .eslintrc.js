@@ -18,6 +18,11 @@ module.exports = {
       version: 'detect',
     },
   },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: ['./tsconfig.json'],
+    tsconfigRootDir: __dirname,
+  },
   rules: {
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/no-unused-vars': [
@@ -35,6 +40,8 @@ module.exports = {
         selector: 'interface',
       },
     ],
+    '@typescript-eslint/switch-exhaustiveness-check': 'error',
+    'default-case': 'off',
     'no-console': ['error', { allow: ['info'] }],
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',

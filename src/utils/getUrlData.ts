@@ -3,8 +3,10 @@ import { spliceItemAt } from './spliceItemAt';
 
 export type UrlData = Pick<
   Request,
-  'api' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters' | 'subPath'
+  'api' | 'apiSubPath' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters'
 >;
+
+const isAppId = (value: string): boolean => new RegExp('^([A-Z0-9]){10}$').test(value);
 
 const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPath: string } => {
   const splitHostName = url.hostname.split('.');
@@ -42,6 +44,11 @@ const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPa
     cluster = 'staging';
   }
 
+  if (['beta-dashboard.algolia.com', 'dashboard.algolia.com'].includes(url.host)) {
+    api = 'dashboard';
+    cluster = url.host === 'beta-dashboard.algolia.com' ? 'beta' : undefined;
+  }
+
   return { api, apiPath, cluster };
 };
 
@@ -61,7 +68,7 @@ const getIndexAndSubPath = (
   api: ApiType,
   apiPath: string,
   searchParams: URLSearchParams
-): Pick<UrlData, 'index' | 'queryStringParameters' | 'subPath'> => {
+): Pick<UrlData, 'apiSubPath' | 'index' | 'queryStringParameters'> => {
   const queryStringParameters = getQueryStringParameters(searchParams);
 
   const [_slash, version, ...apiPathParts] = apiPath.split('/');
@@ -69,10 +76,23 @@ const getIndexAndSubPath = (
     apiPathParts.unshift(version);
   }
 
-  let subPath: UrlData['subPath'] = apiPathParts.join('/');
+  let apiSubPath: UrlData['apiSubPath'] = apiPathParts.join('/');
   let index: UrlData['index'] = null;
 
   switch (api) {
+    case 'dashboard': {
+      const {
+        array: [_, ...array],
+      } = spliceItemAt(apiPathParts, 1, null);
+      if (isAppId(array[1])) {
+        array[1] = '{appId}';
+      }
+      apiSubPath = array.join('/');
+      if (queryStringParameters.index) {
+        index = queryStringParameters.index;
+      }
+      break;
+    }
     case 'analytics':
       if (queryStringParameters.index) {
         index = queryStringParameters.index;
@@ -83,7 +103,7 @@ const getIndexAndSubPath = (
     case 'insights':
     case 'automation': {
       const { array, item } = spliceItemAt(apiPathParts, 1, null);
-      subPath = array.join('/');
+      apiSubPath = array.join('/');
       index = item ?? queryStringParameters.index ?? null;
       break;
     }
@@ -93,11 +113,11 @@ const getIndexAndSubPath = (
       if (array[0] === 'indexes' && array.length > 1) {
         array.splice(0, 1);
       }
-      if (array[0] === 'rules' && array[1] !== 'search') {
+      if (['rules', 'task'].includes(array[0]) && array[1] !== 'search') {
         array.splice(1);
         array.push('{id}');
       }
-      subPath = array.join('/');
+      apiSubPath = array.join('/');
       index = item;
       break;
     }
@@ -105,12 +125,12 @@ const getIndexAndSubPath = (
       break;
   }
 
-  return { index, subPath, queryStringParameters };
+  return { index, apiSubPath, queryStringParameters };
 };
 
 export const getUrlData = (url: URL): UrlData => {
   const { api, cluster, apiPath } = getApiPathCluster(url);
-  const { index, subPath, queryStringParameters } = getIndexAndSubPath(
+  const { index, apiSubPath, queryStringParameters } = getIndexAndSubPath(
     api,
     apiPath,
     url.searchParams
@@ -119,7 +139,7 @@ export const getUrlData = (url: URL): UrlData => {
   return {
     api,
     cluster,
-    subPath,
+    apiSubPath,
     displayableUrl: `${url.host}${url.pathname}`,
     index,
     queryStringParameters,

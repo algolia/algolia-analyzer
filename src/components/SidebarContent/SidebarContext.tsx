@@ -4,7 +4,7 @@ import type { Request } from 'utils';
 
 interface Sidebar {
   selectedLine?: Request;
-  setSelectedLine: (id?: Request) => void;
+  selectLine: (id: Request) => void;
 }
 
 export const SidebarContext = createContext<Sidebar | null>(null);
