@@ -1,12 +1,30 @@
 import cx from 'classnames';
 import type { FC } from 'react';
-import JsonView from 'react-json-view';
+import JsonView, { type OnCopyProps } from 'react-json-view';
 
 interface CodeProps {
   code?: unknown;
   leftPadding?: boolean;
   className?: string;
 }
+
+const copyToClipboard = ({ src }: OnCopyProps): void => {
+  const container = document.createElement('textarea');
+
+  switch (typeof src) {
+    case 'string':
+      container.innerHTML = src;
+      break;
+    default:
+      container.innerHTML = JSON.stringify(src, null, 2);
+      break;
+  }
+
+  document.body.appendChild(container);
+  container.select();
+  document.execCommand('copy');
+  document.body.removeChild(container);
+};
 
 export const Code: FC<CodeProps> = ({ code, leftPadding = true, className }) =>
   code ? (
@@ -22,6 +40,7 @@ export const Code: FC<CodeProps> = ({ code, leftPadding = true, className }) =>
         displayDataTypes={false}
         quotesOnKeys={false}
         style={{ fontSize: '12px' }}
+        enableClipboard={copyToClipboard}
       />
     </div>
   ) : null;
