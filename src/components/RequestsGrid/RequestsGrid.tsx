@@ -10,7 +10,6 @@ import isEqual from 'lodash/isEqual';
 import { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { HelpCircle, Search } from 'react-feather';
 
-import { useSidebar } from 'components/SidebarContent';
 import { getLocalStorageValue, setLocalStorageValue, type Request } from 'utils';
 
 import {
@@ -45,7 +44,6 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
   const [defaultUrlOptions, setDefaultUrlOptions] = useState<UrlOption[]>([]);
   const [selectedGeneralOptions, setSelectedGeneralOptions] = useState<GeneralOption[]>([]);
   const [selectedUrlOptions, setSelectedUrlOptions] = useState<UrlOption[]>([]);
-  const { selectedLine } = useSidebar();
 
   useEffect(() => {
     getLocalStorageValue<GeneralOption[]>(generalOptionsKey).then((generalOptions) => {
@@ -188,18 +186,16 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
                       setSelectedUrlOptions((options as UrlOption[]) ?? [])
                     }
                   />
-                  {selectedLine === undefined && (
-                    <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
-                      <Button
-                        variant="primary"
-                        loading={isSaving}
-                        disabled={!canSaveOptions}
-                        onClick={saveDefaultOptions}
-                      >
-                        Save
-                      </Button>
-                    </TooltipWrapper>
-                  )}
+                  <TooltipWrapper content="Save these filters as your default for when you open this Panel.">
+                    <Button
+                      variant="primary"
+                      loading={isSaving}
+                      disabled={!canSaveOptions}
+                      onClick={saveDefaultOptions}
+                    >
+                      Save
+                    </Button>
+                  </TooltipWrapper>
                 </div>
               </th>
             </tr>
