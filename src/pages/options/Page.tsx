@@ -23,7 +23,7 @@ export const Page: FC = () => {
 
   return isDashboardApiActive !== undefined ? (
     <section className={cx(stl`display-body`, 'p-6 space-y-3')}>
-      <h2 className={stl`display-heading`}>Optional APIs to watch</h2>
+      <h2 className={stl`display-heading`}>Optional APIs to capture:</h2>
       <div className="flex items-center space-x-3">
         <span>Dashboard API</span>
         <Toggle checked={dashboardSate} onChange={updateDashboardApiActive} />
