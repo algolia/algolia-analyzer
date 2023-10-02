@@ -110,7 +110,7 @@ export const Page: FC = () => {
           {selectedLine && !sidebarOpen && (
             <aside
               className={cx(
-                `absolute top-0 right-0 z-10 transition-transform
+                `fixed top-12 right-0 z-10 transition-transform
                 text-white bg-grey-900 rounded-bl ${stl`shadow-z100`}`,
                 sidebarOpen ? 'translate-x-full' : 'translate-x-0'
               )}
@@ -127,7 +127,7 @@ export const Page: FC = () => {
           <aside
             className={cx(
               sidebarOpen ? 'translate-x-0' : 'translate-x-full',
-              `absolute top-0 right-0 w-1/2 h-[calc(100vh-3rem)] overflow-y-auto z-10
+              `fixed top-12 right-0 w-1/2 h-[calc(100vh-3rem)] overflow-y-auto z-10
               flex flex-col items-start bg-white ${stl`shadow-z100`} transition-transform`
             )}
           >
