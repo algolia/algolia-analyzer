@@ -6,7 +6,7 @@ import { Slash, Settings as Cog } from 'react-feather';
 
 import { Code } from './Code';
 
-export const AclCheck: FC = () => {
+export const Tools: FC = () => {
   const [pending, startTransition] = useTransition();
   const [appId, setAppId] = useState<string>();
   const [apiKey, setApiKey] = useState<string>();

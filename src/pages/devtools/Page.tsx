@@ -3,9 +3,9 @@ import cx from 'classnames';
 import { type FC, useCallback, useEffect, useState } from 'react';
 import { ChevronsLeft, Slash } from 'react-feather';
 
-import { AclCheck } from 'components/AclCheck';
 import { RequestsGrid } from 'components/RequestsGrid';
 import { SidebarContent, SidebarContext } from 'components/SidebarContent';
+import { Tools } from 'components/Tools';
 import { requestBody } from 'models/RequestBody';
 import { responseBody } from 'models/ResponseBody';
 import {
@@ -103,7 +103,7 @@ export const Page: FC = () => {
               className={`sticky top-0 z-10 pt-4 mb-4 pl-[calc(25%-62px)] px-[calc(0.5rem+3px)] bg-grey-100 ${stl`shadow-z100`}`}
               tabs={[
                 { label: 'Network', content: <RequestsGrid requests={requests} /> },
-                { label: 'Tools', content: <AclCheck /> },
+                { label: 'Tools', content: <Tools /> },
               ]}
             />
           </section>
