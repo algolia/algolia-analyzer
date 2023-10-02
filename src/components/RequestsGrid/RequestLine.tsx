@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { type FC, useCallback } from 'react';
+import { type FC } from 'react';
 
 import { useSidebar } from 'components/SidebarContent';
 import {
@@ -19,17 +19,13 @@ interface LineProps {
 export const RequestLine: FC<LineProps> = ({ request }) => {
   const { id, method, statusCode, time, url, displayableUrl, cluster, apiSubPath, index, api } =
     request;
-  const { selectedLine, setSelectedLine } = useSidebar();
-
-  const onClick = useCallback(() => {
-    setSelectedLine(request);
-  }, [request, setSelectedLine]);
+  const { selectedLine, selectLine } = useSidebar();
 
   return (
     <tr
       key={id}
       className={cx('group', selectedLine?.id === id && 'bg-grey-100')}
-      onClick={onClick}
+      onClick={(): void => selectLine(request)}
     >
       <td className="space-x-1 leading-lg group-hover:bg-grey-100">
         <MethodTag method={method} />

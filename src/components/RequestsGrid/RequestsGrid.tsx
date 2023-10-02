@@ -6,7 +6,6 @@ import {
   Medallion,
   TooltipWrapper,
 } from '@algolia/satellite';
-import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { HelpCircle, Search } from 'react-feather';
@@ -137,7 +136,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
         <table className="stl-table-with-highlight stl-table table-fixed">
           <thead>
             <tr className="capitalize">
-              <th className={cx('!font-bold', selectedLine === undefined ? 'w-48' : 'w-32')}>
+              <th className="!font-bold w-48">
                 general <ReverseTagInfo />
               </th>
               <th className="!font-bold">
