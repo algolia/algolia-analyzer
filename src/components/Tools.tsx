@@ -1,15 +1,29 @@
 import type { GetApiKeyResponse, Settings } from '@algolia/client-search';
-import { Alert, Badge, Button, Card, IconButton, Input, stl } from '@algolia/satellite';
-import algoliasearch from 'algoliasearch';
+import {
+  Alert,
+  AutoComplete,
+  Badge,
+  Button,
+  Card,
+  IconButton,
+  Input,
+  type Option,
+  stl,
+} from '@algolia/satellite';
+import algoliasearch, { type SearchClient } from 'algoliasearch';
 import { type FC, useCallback, useEffect, useState, useTransition } from 'react';
 import { Slash, Settings as Cog } from 'react-feather';
 
 import { Code } from './Code';
 
+const indexToOption = (name: string): Option => ({ label: name, value: name });
+
 export const Tools: FC = () => {
   const [pending, startTransition] = useTransition();
   const [appId, setAppId] = useState<string>();
   const [apiKey, setApiKey] = useState<string>();
+  const [algoliaClient, setAlgoliaClient] = useState<SearchClient>();
+  const [indexNames, setIndexNames] = useState<string[]>([]);
   const [indexName, setIndexName] = useState<string>();
   const [settings, setSettings] = useState<Settings | null>(null);
   const [apiKeyInfo, setApiKeyInfo] = useState<GetApiKeyResponse | null>(null);
@@ -21,10 +35,9 @@ export const Tools: FC = () => {
     setSettings(null);
   }, []);
 
-  const getIndexSettings = async (): Promise<void> => {
-    if (!appId || !apiKey || !indexName) return;
-    const client = algoliasearch(appId, apiKey);
-    const index = client.initIndex(indexName);
+  const getIndexSettings = async (name: string): Promise<void> => {
+    if (!algoliaClient) return;
+    const index = algoliaClient.initIndex(name);
     setSettings(await index.getSettings());
   };
 
@@ -35,6 +48,7 @@ export const Tools: FC = () => {
       });
     } else {
       const client = algoliasearch(appId, apiKey);
+      setAlgoliaClient(client);
       client
         .getApiKey(apiKey)
         .then((value) => {
@@ -50,8 +64,16 @@ export const Tools: FC = () => {
     }
   }, [appId, apiKey]);
 
+  useEffect(() => {
+    if (algoliaClient && (apiKeyInfo?.acl ?? []).includes('listIndexes')) {
+      algoliaClient.listIndices().then((res) => {
+        setIndexNames(res.items.map((i) => i.name));
+      });
+    }
+  }, [algoliaClient, apiKeyInfo?.acl]);
+
   return (
-    <div className="mx-2 space-y-4">
+    <div className="mx-2 space-y-4 mb-4">
       <Card className="space-y-4">
         <h2 className={stl`display-small`}>Check API Key</h2>
         <div className="flex items-center space-x-2">
@@ -117,13 +139,15 @@ export const Tools: FC = () => {
             </Alert>
           ))}
         <div className="flex items-center space-x-2">
-          <Input
-            type="text"
-            id="indexName"
+          <AutoComplete
+            multiple={false}
+            clearable={true}
+            creatable={true}
             placeholder="Index Name"
             className="w-[17.5rem]"
-            value={indexName}
-            onChange={(e): void => setIndexName(e.currentTarget.value)}
+            options={indexNames.map(indexToOption)}
+            value={indexName ? indexToOption(indexName) : undefined}
+            onChange={(value): void => setIndexName(value?.value.toString())}
           />
           <Button
             startIcon={Cog}
@@ -131,7 +155,7 @@ export const Tools: FC = () => {
             size="large"
             title="get index settings"
             disabled={!indexName || !apiKeyInfo || !apiKeyInfo.acl.includes('settings')}
-            onClick={getIndexSettings}
+            onClick={(): Promise<void> => getIndexSettings(indexName!)}
           >
             get settings
           </Button>
