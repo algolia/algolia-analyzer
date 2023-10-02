@@ -1,7 +1,7 @@
 import { IconButton, ContentTabs, stl } from '@algolia/satellite';
 import cx from 'classnames';
 import { type FC, useCallback, useEffect, useState } from 'react';
-import { ChevronsLeft, Slash } from 'react-feather';
+import { ChevronsLeft, Settings, Slash } from 'react-feather';
 
 import { RequestsGrid } from 'components/RequestsGrid';
 import { SidebarContent, SidebarContext } from 'components/SidebarContent';
@@ -15,6 +15,8 @@ import {
   requestHeaderFilter,
   urlPattern2,
   getUrlData,
+  isDashboardApiActive,
+  urlPattern3,
 } from 'utils';
 
 export const Page: FC = () => {
@@ -33,39 +35,47 @@ export const Page: FC = () => {
     }
   }, [selectedLine]);
 
-  const onRequestFinishedListener = useCallback((details: chrome.devtools.network.Request) => {
-    if (!urlPattern.test(details.request.url) && !urlPattern2.test(details.request.url)) {
-      return;
-    }
+  const onRequestFinishedListener = useCallback(
+    async (details: chrome.devtools.network.Request) => {
+      const dashboardApiActive = await isDashboardApiActive();
+      if (
+        !urlPattern.test(details.request.url) &&
+        !urlPattern2.test(details.request.url) &&
+        !(dashboardApiActive && urlPattern3.test(details.request.url))
+      ) {
+        return;
+      }
 
-    const time = new Date().getTime();
-    const random = Math.random();
+      const time = new Date().getTime();
+      const random = Math.random();
 
-    details.getContent((content) => {
-      const id = `${time}-${random}`;
-      const request: Request = {
-        id,
-        method: details.request.method.toUpperCase(),
-        url: details.request.url,
-        time: details.time,
-        ...getUrlData(new URL(details.request.url)),
-        requestBody: requestBody(
-          safeJsonParse(
-            details.request.postData?.text ?? '',
-            `error parsing requestBody for requestId ${id}`
-          )
-        ),
-        requestHeaders: details.request.headers.filter((header) =>
-          header.name.startsWith(requestHeaderFilter)
-        ),
-        statusCode: details.response.status,
-        responseBody: responseBody(
-          safeJsonParse(content, `error parsing responseBody for requestId ${id}`)
-        ),
-      };
-      setRequests((reqs) => [...reqs, request]);
-    });
-  }, []);
+      details.getContent((content) => {
+        const id = `${time}-${random}`;
+        const request: Request = {
+          id,
+          method: details.request.method.toUpperCase(),
+          url: details.request.url,
+          time: details.time,
+          ...getUrlData(new URL(details.request.url)),
+          requestBody: requestBody(
+            safeJsonParse(
+              details.request.postData?.text ?? '',
+              `error parsing requestBody for requestId ${id}`
+            )
+          ),
+          requestHeaders: details.request.headers.filter((header) =>
+            header.name.startsWith(requestHeaderFilter)
+          ),
+          statusCode: details.response.status,
+          responseBody: responseBody(
+            safeJsonParse(content, `error parsing responseBody for requestId ${id}`)
+          ),
+        };
+        setRequests((reqs) => [...reqs, request]);
+      });
+    },
+    []
+  );
 
   const clearRequests = useCallback(() => {
     setRequests([]);
@@ -96,6 +106,13 @@ export const Page: FC = () => {
             onClick={clearRequests}
           />
           <h1 className="stl-display-medium grow mb-1">Algolia Analyzer</h1>
+          <IconButton
+            icon={Settings}
+            variant="subtle"
+            size="large"
+            title="extension settings"
+            onClick={(): void => chrome.runtime.openOptionsPage()}
+          />
         </header>
         <div className="h-[calc(100vh-3rem)] bg-grey-100 relative overflow-x-hidden">
           <section className="min-w-1/2 space-y-8 overflow-y-auto">

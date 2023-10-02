@@ -6,6 +6,8 @@ export type UrlData = Pick<
   'api' | 'apiSubPath' | 'cluster' | 'displayableUrl' | 'index' | 'queryStringParameters'
 >;
 
+const isAppId = (value: string): boolean => new RegExp('^([A-Z0-9]){10}$').test(value);
+
 const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPath: string } => {
   const splitHostName = url.hostname.split('.');
   let cluster: string | undefined = splitHostName[0];
@@ -42,6 +44,11 @@ const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPa
     cluster = 'staging';
   }
 
+  if (['beta-dashboard.algolia.com', 'dashboard.algolia.com'].includes(url.host)) {
+    api = 'dashboard';
+    cluster = url.host === 'beta-dashboard.algolia.com' ? 'beta' : undefined;
+  }
+
   return { api, apiPath, cluster };
 };
 
@@ -73,6 +80,19 @@ const getIndexAndSubPath = (
   let index: UrlData['index'] = null;
 
   switch (api) {
+    case 'dashboard': {
+      const {
+        array: [_, ...array],
+      } = spliceItemAt(apiPathParts, 1, null);
+      if (isAppId(array[1])) {
+        array[1] = '{appId}';
+      }
+      apiSubPath = array.join('/');
+      if (queryStringParameters.index) {
+        index = queryStringParameters.index;
+      }
+      break;
+    }
     case 'analytics':
       if (queryStringParameters.index) {
         index = queryStringParameters.index;

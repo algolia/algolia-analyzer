@@ -1,6 +1,7 @@
 export type ApiType =
   | 'analytics'
   | 'automation'
+  | 'dashboard'
   | 'insights'
   | 'merchandising'
   | 'query-categorization'
