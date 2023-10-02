@@ -1,6 +1,6 @@
 {
   "name": "algolia-analyzer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
