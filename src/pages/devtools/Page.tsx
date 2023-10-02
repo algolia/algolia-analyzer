@@ -110,7 +110,7 @@ export const Page: FC = () => {
           {selectedLine && !sidebarOpen && (
             <aside
               className={cx(
-                `absolute top-0 right-0 z-10
+                `absolute top-0 right-0 z-10 transition-transform
                 text-white bg-grey-900 rounded-bl ${stl`shadow-z100`}`,
                 sidebarOpen ? 'translate-x-full' : 'translate-x-0'
               )}
@@ -122,13 +122,6 @@ export const Page: FC = () => {
               >
                 <ChevronsLeft />
               </button>
-              {/* <IconButton
-                title="open sidebar"
-                icon={ChevronsLeft}
-                size="large"
-                variant="subtle"
-                onClick={(): void => setSidebarOpen(true)}
-              /> */}
             </aside>
           )}
           <aside

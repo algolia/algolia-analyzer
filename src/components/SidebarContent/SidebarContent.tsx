@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Upload, Download, Link2, X } from 'react-feather';
+import { Upload, Download, Link2, ChevronsRight } from 'react-feather';
 
 import type { Request } from 'utils';
 
@@ -25,7 +25,7 @@ export const SidebarContent: FC<SidebarProps> = ({
         <span className="break-words">{displayableUrl.replaceAll('/', '/​')}</span>
       </h3>
       <button type="button" className="w-10 h-10 flex items-center justify-center" onClick={close}>
-        <X />
+        <ChevronsRight />
       </button>
     </div>
     {queryStringParameters && (
