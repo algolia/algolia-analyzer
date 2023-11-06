@@ -8,6 +8,7 @@ const ResponseBody = object({
       params: string().transform(paramsToObject),
     }).passthrough()
   ).optional(),
+  params: string().transform(paramsToObject).optional(),
 }).passthrough();
 
 export const responseBody = (raw?: unknown): unknown | undefined => {
