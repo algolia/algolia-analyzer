@@ -61,9 +61,13 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
 
   const saveDefaultOptions = async (): Promise<void> => {
     setIsSaving(true);
+    const newGeneralOptions = selectedGeneralOptions;
+    const newUrlOptions = selectedUrlOptions;
     try {
-      await setLocalStorageValue(generalOptionsKey, selectedGeneralOptions);
-      await setLocalStorageValue(urlOptionsKey, selectedUrlOptions);
+      await setLocalStorageValue(generalOptionsKey, newGeneralOptions);
+      setDefaultGeneralOptions(newGeneralOptions);
+      await setLocalStorageValue(urlOptionsKey, newUrlOptions);
+      setDefaultUrlOptions(newUrlOptions);
     } finally {
       setIsSaving(false);
     }
