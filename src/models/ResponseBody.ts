@@ -1,11 +1,14 @@
 import { string, array, object } from 'zod';
 
+import { paramsToObject } from './paramsToObject';
+
 const ResponseBody = object({
   results: array(
     object({
-      params: string().transform(decodeURIComponent),
+      params: string().transform(paramsToObject),
     }).passthrough()
   ).optional(),
+  params: string().transform(paramsToObject).optional(),
 }).passthrough();
 
 export const responseBody = (raw?: unknown): unknown | undefined => {
@@ -14,9 +17,5 @@ export const responseBody = (raw?: unknown): unknown | undefined => {
   }
 
   const result = ResponseBody.safeParse(raw);
-  if (!result.success) {
-    console.info('ResponseBody could not be parsed', result.error);
-    return raw;
-  }
-  return result.data;
+  return result.success ? result.data : raw;
 };

@@ -1,9 +1,11 @@
 import { string, array, object } from 'zod';
 
+import { paramsToObject } from './paramsToObject';
+
 const RequestBody = object({
   requests: array(
     object({
-      params: string().transform(decodeURIComponent),
+      params: string().transform(paramsToObject),
     }).passthrough()
   ).optional(),
 }).passthrough();
@@ -14,9 +16,5 @@ export const requestBody = (raw?: unknown): unknown | undefined => {
   }
 
   const result = RequestBody.safeParse(raw);
-  if (!result.success) {
-    console.info('RequestBody could not be parsed', result.error);
-    return raw;
-  }
-  return result.data;
+  return result.success ? result.data : raw;
 };
