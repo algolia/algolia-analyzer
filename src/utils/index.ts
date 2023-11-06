@@ -1,5 +1,6 @@
 export * from './constants';
 export * from './getUrlData';
+export * from './isDefined';
 export * from './localStorage';
 export * from './Request';
 export * from './safeJsonParse';
