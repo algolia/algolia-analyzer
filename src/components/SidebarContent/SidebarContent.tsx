@@ -1,9 +1,11 @@
 import type { FC } from 'react';
 import { Upload, Download, Link2, ChevronsRight } from 'react-feather';
 
-import type { Request } from 'utils';
+import { requestHeaderFilter, type Request } from 'utils';
 
 import { Code } from '../Code';
+
+import { LibVersions } from './LibVersions';
 
 interface SidebarProps {
   request: Request;
@@ -35,6 +37,7 @@ export const SidebarContent: FC<SidebarProps> = ({
           Query String Parameters
         </h3>
         <Code code={queryStringParameters} className={scrollingContent} />
+        <LibVersions algoliaAgent={queryStringParameters[`${requestHeaderFilter}agent`]} />
       </>
     )}
     {requestHeaders.length > 0 && (
