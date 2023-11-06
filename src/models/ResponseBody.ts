@@ -14,9 +14,5 @@ export const responseBody = (raw?: unknown): unknown | undefined => {
   }
 
   const result = ResponseBody.safeParse(raw);
-  if (!result.success) {
-    console.info('ResponseBody could not be parsed', result.error);
-    return raw;
-  }
-  return result.data;
+  return result.success ? result.data : raw;
 };
