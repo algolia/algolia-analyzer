@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Algolia Analyzer",
   "description": "algolia-analyzer",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "minimum_chrome_version": "60",
   "icons": {
     "16": "./content/icons/icon-16.png",
@@ -22,5 +22,6 @@
       "matches": [],
       "extension_ids": []
     }
-  ]
+  ],
+  "content_scripts": []
 }
