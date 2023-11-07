@@ -1,4 +1,4 @@
-import { GetApiKeyResponse, Settings } from '@algolia/client-search';
+import { type GetApiKeyResponse, type Settings } from '@algolia/client-search';
 import {
   Alert,
   AutoComplete,
