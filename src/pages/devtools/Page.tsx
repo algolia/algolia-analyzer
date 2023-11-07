@@ -60,21 +60,21 @@ export const Page: FC = () => {
           requestBody: requestBody(
             safeJsonParse(
               details.request.postData?.text ?? '',
-              `error parsing requestBody for requestId ${id}`
-            )
+              `error parsing requestBody for requestId ${id}`,
+            ),
           ),
           requestHeaders: details.request.headers.filter((header) =>
-            header.name.startsWith(requestHeaderFilter)
+            header.name.startsWith(requestHeaderFilter),
           ),
           statusCode: details.response.status,
           responseBody: responseBody(
-            safeJsonParse(content, `error parsing responseBody for requestId ${id}`)
+            safeJsonParse(content, `error parsing responseBody for requestId ${id}`),
           ),
         };
         setRequests((reqs) => [...reqs, request]);
       });
     },
-    []
+    [],
   );
 
   const clearRequests = useCallback(() => {
@@ -129,7 +129,7 @@ export const Page: FC = () => {
               className={cx(
                 `fixed top-12 right-0 z-10 transition-transform
                 text-white bg-grey-900 rounded-bl ${stl`shadow-z100`}`,
-                sidebarOpen ? 'translate-x-full' : 'translate-x-0'
+                sidebarOpen ? 'translate-x-full' : 'translate-x-0',
               )}
             >
               <button
@@ -145,7 +145,7 @@ export const Page: FC = () => {
             className={cx(
               sidebarOpen ? 'translate-x-0' : 'translate-x-full',
               `fixed top-12 right-0 w-1/2 h-[calc(100vh-3rem)] overflow-y-auto z-10
-              flex flex-col items-start bg-white ${stl`shadow-z100`} transition-transform`
+              flex flex-col items-start bg-white ${stl`shadow-z100`} transition-transform`,
             )}
           >
             {selectedLine && (

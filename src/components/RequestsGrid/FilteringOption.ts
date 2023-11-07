@@ -1,7 +1,7 @@
 import { type Option } from '@algolia/satellite';
 
 export const generalTypes = ['method', 'statusCode'] as const;
-type GeneralOptionType = typeof generalTypes[number];
+type GeneralOptionType = (typeof generalTypes)[number];
 
 export interface GeneralOption extends Option {
   type: GeneralOptionType;
@@ -9,7 +9,7 @@ export interface GeneralOption extends Option {
 }
 
 export const urlTypes = ['cluster', 'index', 'apiSubPath', 'api'] as const;
-type UrlOptionType = typeof urlTypes[number];
+type UrlOptionType = (typeof urlTypes)[number];
 
 export interface UrlOption extends Option {
   type: UrlOptionType;

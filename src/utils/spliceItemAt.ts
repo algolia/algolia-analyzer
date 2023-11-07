@@ -1,7 +1,7 @@
 export const spliceItemAt = <T = any, U = undefined>(
   array: T[],
   index: number,
-  defaultValue: U
+  defaultValue: U,
 ): {
   array: T[];
   item: T | U;

@@ -23,13 +23,13 @@ describe('transformParams', () => {
       highlightPostTag: '</ais-highlight-0>',
     });
     expect(
-      paramsToObject('ruleContexts=%5B%222023-q2-sale%22%2C%22good-context%22%2C%22mobile%22%5D')
+      paramsToObject('ruleContexts=%5B%222023-q2-sale%22%2C%22good-context%22%2C%22mobile%22%5D'),
     ).toEqual({ ruleContexts: '["2023-q2-sale","good-context","mobile"]' });
   });
 
   it('should transform strings with multiple parameters', () => {
     expect(
-      paramsToObject('analytics=false&ruleContexts=mobile&hitsPerPage=50&tagFilters=')
+      paramsToObject('analytics=false&ruleContexts=mobile&hitsPerPage=50&tagFilters='),
     ).toEqual({
       analytics: 'false',
       ruleContexts: 'mobile',
@@ -41,8 +41,8 @@ describe('transformParams', () => {
   it('should transform string with encoding & with multiple parameters', () => {
     expect(
       paramsToObject(
-        'analytics=false&hitsPerPage=50&attributesToRetrieve=%5B%22*%22%5D&attributesToSnippet=%5B%22*%3A20%22%5D&highlightPreTag=%3Cais-highlight-0%3E&highlightPostTag=%3C%2Fais-highlight-0%3E&ruleContexts=%5B%222023-q2-sale%22%2C%22good-context%22%2C%22mobile%22%5D&tagFilters='
-      )
+        'analytics=false&hitsPerPage=50&attributesToRetrieve=%5B%22*%22%5D&attributesToSnippet=%5B%22*%3A20%22%5D&highlightPreTag=%3Cais-highlight-0%3E&highlightPostTag=%3C%2Fais-highlight-0%3E&ruleContexts=%5B%222023-q2-sale%22%2C%22good-context%22%2C%22mobile%22%5D&tagFilters=',
+      ),
     ).toEqual({
       analytics: 'false',
       hitsPerPage: '50',
@@ -58,8 +58,8 @@ describe('transformParams', () => {
   it('should parse rulesAtQueryTime', () => {
     expect(
       paramsToObject(
-        'rulesAtQueryTime=%5B%7B%22conditions%22%3A%5B%5D%2C%22consequence%22%3A%7B%22filterPromotes%22%3Atrue%7D%7D%5D'
-      )
+        'rulesAtQueryTime=%5B%7B%22conditions%22%3A%5B%5D%2C%22consequence%22%3A%7B%22filterPromotes%22%3Atrue%7D%7D%5D',
+      ),
     ).toEqual({
       rulesAtQueryTime: [
         {

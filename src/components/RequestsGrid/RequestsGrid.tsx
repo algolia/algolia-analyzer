@@ -92,44 +92,44 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
 
   const generalOptions = useMemo(
     () => getOptions<GeneralOption>(selectedRequests, generalTypes),
-    [selectedRequests]
+    [selectedRequests],
   );
 
   const urlOptions = useMemo(
     () => getOptions<UrlOption>(selectedRequests, urlTypes),
-    [selectedRequests]
+    [selectedRequests],
   );
 
   const deleteGeneralOption = useCallback(
     (option: GeneralOption) =>
       setSelectedGeneralOptions((options) => options.filter((o) => o.value !== option.value)),
-    []
+    [],
   );
 
   const deleteUrlOption = useCallback(
     (option: UrlOption) =>
       setSelectedUrlOptions((options) => options.filter((o) => o.value !== option.value)),
-    []
+    [],
   );
 
   const reverseGeneralOption = useCallback(
     (option: GeneralOption) =>
       setSelectedGeneralOptions((options) =>
         options.map((o) =>
-          o.value === option.value ? { ...option, reversed: !option.reversed } : o
-        )
+          o.value === option.value ? { ...option, reversed: !option.reversed } : o,
+        ),
       ),
-    []
+    [],
   );
 
   const reverseUrlOption = useCallback(
     (option: UrlOption) =>
       setSelectedUrlOptions((options) =>
         options.map((o) =>
-          o.value === option.value ? { ...option, reversed: !option.reversed } : o
-        )
+          o.value === option.value ? { ...option, reversed: !option.reversed } : o,
+        ),
       ),
-    []
+    [],
   );
 
   return (

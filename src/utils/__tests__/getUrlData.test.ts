@@ -15,7 +15,7 @@ describe('getUrlData', () => {
 
     it('/indexes', () => {
       expect(
-        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes?prefix=products&page=0'))
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes?prefix=products&page=0')),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -39,7 +39,7 @@ describe('getUrlData', () => {
 
     it('/indexes/*/rules/search', () => {
       expect(
-        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/rules/search'))
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/rules/search')),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -53,8 +53,8 @@ describe('getUrlData', () => {
     it('/indexes/*/rules/{id}', () => {
       expect(
         getUrlData(
-          new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/rules/qr-1676451640489')
-        )
+          new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/rules/qr-1676451640489'),
+        ),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -67,7 +67,7 @@ describe('getUrlData', () => {
 
     it('indexes/*/synonyms/search', () => {
       expect(
-        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/synonyms/search'))
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/synonyms/search')),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -80,7 +80,7 @@ describe('getUrlData', () => {
 
     it('indexes/settings', () => {
       expect(
-        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/settings'))
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/settings')),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -93,7 +93,7 @@ describe('getUrlData', () => {
 
     it('/indexes/*/task/{id}', () => {
       expect(
-        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001'))
+        getUrlData(new URL('https://f4t6cuv2ah.algolia.net/1/indexes/products/task/5260335001')),
       ).toEqual({
         api: 'search',
         cluster: 'f4t6cuv2ah',
@@ -110,9 +110,9 @@ describe('getUrlData', () => {
       expect(
         getUrlData(
           new URL(
-            'https://analytics.de.algolia.com/2/tags?index=products&limit=1000&startDate=2023-06-26&endDate=2023-07-02'
-          )
-        )
+            'https://analytics.de.algolia.com/2/tags?index=products&limit=1000&startDate=2023-06-26&endDate=2023-07-02',
+          ),
+        ),
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
@@ -130,7 +130,7 @@ describe('getUrlData', () => {
 
     it('/status', () => {
       expect(
-        getUrlData(new URL('https://analytics.de.algolia.com/2/status?index=products'))
+        getUrlData(new URL('https://analytics.de.algolia.com/2/status?index=products')),
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
@@ -145,9 +145,9 @@ describe('getUrlData', () => {
       expect(
         getUrlData(
           new URL(
-            'https://analytics.de.algolia.com/unstable/categories/count?index=products&filterAttributes=categories&startDate=2023-06-26&endDate=2023-07-02'
-          )
-        )
+            'https://analytics.de.algolia.com/unstable/categories/count?index=products&filterAttributes=categories&startDate=2023-06-26&endDate=2023-07-02',
+          ),
+        ),
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
@@ -167,9 +167,9 @@ describe('getUrlData', () => {
       expect(
         getUrlData(
           new URL(
-            'https://analytics.de.algolia.com/unstable/categories?index=products&clickAnalytics=true&limit=1000&category.attribute=categories&orderBy=searchCount&direction=desc&startDate=2023-06-26&endDate=2023-07-02'
-          )
-        )
+            'https://analytics.de.algolia.com/unstable/categories?index=products&clickAnalytics=true&limit=1000&category.attribute=categories&orderBy=searchCount&direction=desc&startDate=2023-06-26&endDate=2023-07-02',
+          ),
+        ),
       ).toEqual({
         api: 'analytics',
         cluster: 'de',
@@ -204,7 +204,7 @@ describe('getUrlData', () => {
   describe('query categorization', () => {
     it('/predictions-bins', () => {
       expect(
-        getUrlData(new URL('https://query-categorization.de.algolia.com/1/predictions-bins'))
+        getUrlData(new URL('https://query-categorization.de.algolia.com/1/predictions-bins')),
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
@@ -228,7 +228,7 @@ describe('getUrlData', () => {
 
     it('/status/*', () => {
       expect(
-        getUrlData(new URL('https://query-categorization.de.algolia.com/1/status/products'))
+        getUrlData(new URL('https://query-categorization.de.algolia.com/1/status/products')),
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
@@ -241,7 +241,7 @@ describe('getUrlData', () => {
 
     it('/taxonomy/*', () => {
       expect(
-        getUrlData(new URL('https://query-categorization.de.algolia.com/1/taxonomy/products'))
+        getUrlData(new URL('https://query-categorization.de.algolia.com/1/taxonomy/products')),
       ).toEqual({
         api: 'query-categorization',
         cluster: 'de',
@@ -258,9 +258,9 @@ describe('getUrlData', () => {
       expect(
         getUrlData(
           new URL(
-            'https://merchandising-staging.de.algolia.com/merchandising/1/indexes/products/custom-rankings'
-          )
-        )
+            'https://merchandising-staging.de.algolia.com/merchandising/1/indexes/products/custom-rankings',
+          ),
+        ),
       ).toEqual({
         api: 'merchandising',
         cluster: 'staging',
@@ -287,7 +287,7 @@ describe('getUrlData', () => {
 
     it('/synonyms/*/count', () => {
       expect(
-        getUrlData(new URL('https://automation.de.algolia.com/1/synonyms/products/count'))
+        getUrlData(new URL('https://automation.de.algolia.com/1/synonyms/products/count')),
       ).toEqual({
         api: 'automation',
         cluster: 'de',
@@ -300,7 +300,7 @@ describe('getUrlData', () => {
 
     it('/synonyms/*', () => {
       expect(
-        getUrlData(new URL('https://automation.de.algolia.com/1/synonyms/products?status=pending'))
+        getUrlData(new URL('https://automation.de.algolia.com/1/synonyms/products?status=pending')),
       ).toEqual({
         api: 'automation',
         cluster: 'de',
@@ -317,9 +317,9 @@ describe('getUrlData', () => {
       expect(
         getUrlData(
           new URL(
-            'https://insights.de.algolia.io/1/metrics?startDate=2023-04-06T00:00:00.000Z&endDate=2023-07-04T23:59:59.999Z&granularity=day&index=products'
-          )
-        )
+            'https://insights.de.algolia.io/1/metrics?startDate=2023-04-06T00:00:00.000Z&endDate=2023-07-04T23:59:59.999Z&granularity=day&index=products',
+          ),
+        ),
       ).toEqual({
         api: 'insights',
         cluster: 'de',
