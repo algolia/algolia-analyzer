@@ -6,7 +6,7 @@ const ResponseBody = object({
   results: array(
     object({
       params: string().transform(paramsToObject),
-    }).passthrough()
+    }).passthrough(),
   ).optional(),
   params: string().transform(paramsToObject).optional(),
 }).passthrough();

@@ -17,7 +17,7 @@ export const UrlOptionItemComponent: FC<UrlOptionItemComponentProps> = ({
   deleteOption,
   reverseOption,
 }) => {
-  const onDelete = deleteOption ? (): void => deleteOption(option as UrlOption) : undefined;
+  const onRemove = deleteOption ? (): void => deleteOption(option as UrlOption) : undefined;
   const onClick: MouseEventHandler<HTMLSpanElement> | undefined = reverseOption
     ? (event): void => {
         event.stopPropagation();
@@ -28,7 +28,7 @@ export const UrlOptionItemComponent: FC<UrlOptionItemComponentProps> = ({
   const props: CustomTagProps = {
     className: cx('mr-1', onClick && 'cursor-pointer'),
     reversed: onClick !== undefined && option.reversed,
-    onDelete,
+    onRemove,
     onClick,
   };
 

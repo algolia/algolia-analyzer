@@ -7,7 +7,7 @@ type OptionsValue = boolean | number | string;
 export const filterByType = (
   requests: Request[],
   filters: FilteringOption[],
-  type: FilterType
+  type: FilterType,
 ): Request[] => {
   let filteredRequests = requests;
 
@@ -23,12 +23,12 @@ export const filterByType = (
     case 'statusCode':
       if (selectedValues.length > 0) {
         filteredRequests = filteredRequests.filter((r) =>
-          selectedValues.includes(r[type] as OptionsValue)
+          selectedValues.includes(r[type] as OptionsValue),
         );
       }
       if (reverseSelectedValues.length > 0) {
         filteredRequests = filteredRequests.filter(
-          (r) => !reverseSelectedValues.includes(r[type] as OptionsValue)
+          (r) => !reverseSelectedValues.includes(r[type] as OptionsValue),
         );
       }
       break;
@@ -36,12 +36,12 @@ export const filterByType = (
     case 'cluster':
       if (selectedValues.length > 0) {
         filteredRequests = filteredRequests.filter(
-          (r) => r[type] && selectedValues.includes(r[type] as OptionsValue)
+          (r) => r[type] && selectedValues.includes(r[type] as OptionsValue),
         );
       }
       if (reverseSelectedValues.length > 0) {
         filteredRequests = filteredRequests.filter(
-          (r) => !r[type] || !reverseSelectedValues.includes(r[type] as OptionsValue)
+          (r) => !r[type] || !reverseSelectedValues.includes(r[type] as OptionsValue),
         );
       }
       break;
@@ -51,22 +51,22 @@ export const filterByType = (
     case 'index':
       if (selectedValues.length > 0) {
         const nullableSelectedValues = selectedValues.map(
-          (v) => v ?? null
+          (v) => v ?? null,
         ) as Array<OptionsValue | null>;
         filteredRequests = filteredRequests.filter(
           (r) =>
             (!r[type] && nullableSelectedValues.find((i) => !i) !== undefined) || // selected subPath is "no apiSupPath/index"
-            nullableSelectedValues.includes(r[type] as OptionsValue | null)
+            nullableSelectedValues.includes(r[type] as OptionsValue | null),
         );
       }
       if (reverseSelectedValues.length > 0) {
         const nullableReversedSelectedValues = reverseSelectedValues.map(
-          (v) => v ?? null
+          (v) => v ?? null,
         ) as Array<OptionsValue | null>;
         filteredRequests = filteredRequests.filter((r) =>
           !r[type]
             ? nullableReversedSelectedValues.find((i) => !i) === undefined // selected subPath is !"no apiSupPath/index"
-            : !nullableReversedSelectedValues.includes(r[type] as OptionsValue | null)
+            : !nullableReversedSelectedValues.includes(r[type] as OptionsValue | null),
         );
       }
       break;

@@ -67,7 +67,7 @@ const getQueryStringParameters = (searchParams: URLSearchParams): Record<string,
 const getIndexAndSubPath = (
   api: ApiType,
   apiPath: string,
-  searchParams: URLSearchParams
+  searchParams: URLSearchParams,
 ): Pick<UrlData, 'apiSubPath' | 'index' | 'queryStringParameters'> => {
   const queryStringParameters = getQueryStringParameters(searchParams);
 
@@ -133,7 +133,7 @@ export const getUrlData = (url: URL): UrlData => {
   const { index, apiSubPath, queryStringParameters } = getIndexAndSubPath(
     api,
     apiPath,
-    url.searchParams
+    url.searchParams,
   );
 
   return {

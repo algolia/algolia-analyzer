@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  extends: ['react-app', 'algolia', 'algolia/react', 'algolia/typescript', 'prettier'],
+  extends: ['algolia', 'algolia/react', 'algolia/typescript', 'prettier'],
   plugins: ['@algolia/satellite', 'prettier'],
   settings: {
     'import/resolver': {

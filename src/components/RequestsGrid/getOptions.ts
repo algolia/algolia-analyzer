@@ -6,7 +6,7 @@ import { noValueText, type FilteringOption } from './FilteringOption';
 
 export const getOptions = <T extends FilteringOption>(
   requests: Request[],
-  types: ReadonlyArray<T['type']>
+  types: ReadonlyArray<T['type']>,
 ): T[] =>
   types.flatMap((type) =>
     uniq(requests.map((r) => r[type])).map((value) => {
@@ -18,5 +18,5 @@ export const getOptions = <T extends FilteringOption>(
         reversed: false,
       };
       return option;
-    })
+    }),
   );

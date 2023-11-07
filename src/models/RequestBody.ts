@@ -6,7 +6,7 @@ const RequestBody = object({
   requests: array(
     object({
       params: string().transform(paramsToObject),
-    }).passthrough()
+    }).passthrough(),
   ).optional(),
 }).passthrough();
 
