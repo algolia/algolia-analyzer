@@ -16,7 +16,7 @@ export const GeneralOptionItemComponent: FC<GeneralOptionItemComponentProps> = (
   deleteOption,
   reverseOption,
 }) => {
-  const onDelete = deleteOption ? (): void => deleteOption(option as GeneralOption) : undefined;
+  const onRemove = deleteOption ? (): void => deleteOption(option as GeneralOption) : undefined;
   const onClick: MouseEventHandler<HTMLSpanElement> | undefined = reverseOption
     ? (event): void => {
         event.stopPropagation();
@@ -27,7 +27,7 @@ export const GeneralOptionItemComponent: FC<GeneralOptionItemComponentProps> = (
   const props: CustomTagProps = {
     className: cx('mr-1', onClick && 'cursor-pointer'),
     reversed: onClick !== undefined && option.reversed,
-    onDelete,
+    onRemove,
     onClick,
   };
 
