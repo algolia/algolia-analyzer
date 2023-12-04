@@ -139,10 +139,16 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
           <thead>
             <tr className="capitalize">
               <th className="!font-bold w-48">
-                general <ReverseTagInfo />
+                <div className="flex items-center space-x-2">
+                  <span>general</span>
+                  <ReverseTagInfo />
+                </div>
               </th>
               <th className="!font-bold">
-                url <ReverseTagInfo />
+                <div className="flex items-center space-x-2">
+                  <span>url</span>
+                  <ReverseTagInfo />
+                </div>
               </th>
             </tr>
             <tr>
@@ -218,7 +224,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
           <div className="flex items-center justify-center px-6 py-20">
             <EmptyState
               centered={true}
-              medallion={<Medallion icon={Search} />}
+              leadIllustration={<Medallion icon={Search} />}
               title="No request to Algolia has been intercepted yet."
               usageContext="result"
             />
