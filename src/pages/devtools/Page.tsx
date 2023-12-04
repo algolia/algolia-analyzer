@@ -117,7 +117,7 @@ export const Page: FC = () => {
         <div className="h-[calc(100vh-3rem)] bg-grey-100 relative overflow-x-hidden">
           <section className="min-w-1/2 space-y-8 overflow-y-auto">
             <ContentTabs
-              className={`sticky top-0 z-10 pt-4 mb-4 pl-[calc(25%-62px)] px-[calc(0.5rem+3px)] bg-grey-100 ${stl`shadow-z100`}`}
+              className={`sticky top-0 z-10 !pt-4 mb-4 !pl-[calc(25%-62px)] !pr-[calc(0.5rem+3px)] bg-grey-100 ${stl`shadow-z100`}`}
               tabs={[
                 { label: 'Network', content: <RequestsGrid requests={requests} /> },
                 { label: 'Tools', content: <Tools /> },
