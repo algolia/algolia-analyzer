@@ -96,7 +96,12 @@ export const Page: FC = () => {
   return (
     <SidebarContext.Provider value={{ selectedLine, selectLine }}>
       <main className="h-screen flex flex-col text-grey-900 overflow-x-hidden">
-        <header className="h-12 sticky flex items-center top-0 left-0 w-full bg-white stl-card-z200 space-x-2 p-2 z-30">
+        <header
+          className={cx(
+            stl`card-z200`,
+            'h-12 sticky flex items-center top-0 left-0 w-full bg-white space-x-2 p-2 z-30',
+          )}
+        >
           <IconButton
             icon={Slash}
             variant="subtle"
@@ -105,7 +110,7 @@ export const Page: FC = () => {
             disabled={requests.length <= 0}
             onClick={clearRequests}
           />
-          <h1 className="stl-display-medium grow mb-1">Algolia Analyzer</h1>
+          <h1 className={cx(stl`display-medium`, 'grow mb-1')}>Algolia Analyzer</h1>
           <IconButton
             icon={Settings}
             variant="subtle"

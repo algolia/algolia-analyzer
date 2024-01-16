@@ -1,5 +1,5 @@
 {
-  "include": ["src", "typings", ".eslintrc.js"],
+  "include": ["src", "typings", ".eslintrc.js", "tailwind.config.js"],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",

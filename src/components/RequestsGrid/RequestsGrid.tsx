@@ -4,8 +4,10 @@ import {
   Card,
   EmptyState,
   Medallion,
+  stl,
   TooltipWrapper,
 } from '@algolia/satellite';
+import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { HelpCircle, Search } from 'react-feather';
@@ -135,7 +137,7 @@ export const RequestsGrid: FC<RequestsGridProps> = ({ requests }) => {
   return (
     <Card fullBleed={true} className="w-[calc(100%-1rem)] mx-2 mb-2">
       <div>
-        <table className="stl-table-with-highlight stl-table table-fixed">
+        <table className={cx(stl`table-with-highlight table `, 'table-fixed')}>
           <thead>
             <tr className="capitalize">
               <th className="!font-bold w-48">
