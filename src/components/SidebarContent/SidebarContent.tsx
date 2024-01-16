@@ -14,7 +14,7 @@ interface SidebarProps {
 
 const stickyTitle =
   'sticky border-t border-white top-[calc(2.5rem+1px)] z-10 min-h-10 w-full pl-6 pr-2 flex items-center display-subheading uppercase text-white bg-grey-900';
-const scrollingContent = 'table w-full';
+const scrollingContent = 'table border-separate w-full';
 
 export const SidebarContent: FC<SidebarProps> = ({
   request: { requestHeaders, requestBody, responseBody, queryStringParameters, displayableUrl },
