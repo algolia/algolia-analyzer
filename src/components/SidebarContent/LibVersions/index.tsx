@@ -10,7 +10,10 @@ interface LibVersionProps {
 export const LibVersions: FC<LibVersionProps> = ({ algoliaAgent }) => {
   const packagesInfo = useMemo(() => getPackagesInfo(algoliaAgent), [algoliaAgent]);
   return (
-    <div className="space-x-2 space-y-2 [&>*:first-child]:ml-2 mb-2 ml-4">
+    <div
+      className="space-x-2 space-y-2 [&>*:first-child]:ml-2 mb-2 ml-4 [&>*]:max-w-[inherit]"
+      style={{ maxWidth: '-webkit-fill-available' }}
+    >
       {packagesInfo.map(({ name, ...currentVersion }) => (
         <TagVersion key={name} packageName={name} currentVersion={currentVersion} />
       ))}

@@ -46,7 +46,11 @@ export const TagVersion: FC<TagVersionProps> = ({ packageName, currentVersion })
   }, [currentVersion.major, currentVersion.minor, currentVersion.patch, yarn]);
 
   return yarn ? (
-    <TooltipWrapper content={`latest version: ${yarn.version}`} hideDelay={0} side="top">
+    <TooltipWrapper
+      content={`latest version: ${yarn.version} (current: ${currentVersion.version})`}
+      hideDelay={0}
+      side="top"
+    >
       <Badge variant={color} icon={icon[color]}>
         {packageName}
         {yarnName !== packageName && <> ({yarnName})</>} {currentVersion.version}

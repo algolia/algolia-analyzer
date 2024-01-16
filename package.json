@@ -28,7 +28,7 @@
   "devDependencies": {
     "@algolia/client-search": "^4.20.0",
     "@algolia/eslint-plugin-satellite": "^4.4.0",
-    "@algolia/satellite": "1.0.0-beta.172",
+    "@algolia/satellite": "1.0.0-beta.178",
     "@parcel/config-webextension": "^2.10.3",
     "@parcel/validator-typescript": "^2.10.3",
     "@swc/core": "^1.3.100",
