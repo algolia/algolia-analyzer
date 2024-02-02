@@ -253,6 +253,52 @@ describe('getUrlData', () => {
     });
   });
 
+  describe('re-ranking', () => {
+    it('/configs', () => {
+      expect(getUrlData(new URL('https://re-ranking.de.algolia.com/1/configs'))).toEqual({
+        api: 're-ranking',
+        cluster: 'de',
+        apiSubPath: 'configs',
+        index: null,
+        queryStringParameters: {},
+        displayableUrl: 're-ranking.de.algolia.com/1/configs',
+      });
+    });
+
+    it('/metadata/*', () => {
+      expect(getUrlData(new URL('https://re-ranking.de.algolia.com/1/metadata/products'))).toEqual({
+        api: 're-ranking',
+        cluster: 'de',
+        apiSubPath: 'metadata',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 're-ranking.de.algolia.com/1/metadata/products',
+      });
+    });
+
+    it('/hitsinfo/*', () => {
+      expect(getUrlData(new URL('https://re-ranking.de.algolia.com/1/hitsinfo/products'))).toEqual({
+        api: 're-ranking',
+        cluster: 'de',
+        apiSubPath: 'hitsinfo',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 're-ranking.de.algolia.com/1/hitsinfo/products',
+      });
+    });
+
+    it('/queries/*', () => {
+      expect(getUrlData(new URL('https://re-ranking.de.algolia.com/1/queries/products'))).toEqual({
+        api: 're-ranking',
+        cluster: 'de',
+        apiSubPath: 'queries',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 're-ranking.de.algolia.com/1/queries/products',
+      });
+    });
+  });
+
   describe('merchandising', () => {
     it('/indexes/*/custom-rankings', () => {
       expect(
