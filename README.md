@@ -20,9 +20,17 @@ It also provides a small tool to check the acl of an Algolia API Key.
 
 ![](./images/empty-list.png)
 
+on the main network panel, see a list requests to Algolia servers, and filter them by api, cluster, index, api subpath, etc.
+
 ![](./images/list.png)
 
+see detailed information about each request (query string parameters, request header, request & response bodies) in beautifully formatted JSON.
+
 ![](./images/panel.png)
+
+on the tools panel, check API key & get index settings.
+
+![](./images/tools-settings.png)
 
 ## Dev & Run
 
