@@ -74,6 +74,7 @@ const apiString: Record<ApiType, string> = {
   insights: 'insights',
   merchandising: 'merch',
   'query-categorization': 'queryCat',
+  're-ranking': 'reRanking',
   search: 'search',
   dashboard: 'dashboard',
 };

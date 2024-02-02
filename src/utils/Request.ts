@@ -5,6 +5,7 @@ export type ApiType =
   | 'insights'
   | 'merchandising'
   | 'query-categorization'
+  | 're-ranking'
   | 'search';
 
 export interface Request {
