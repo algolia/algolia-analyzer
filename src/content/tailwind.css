@@ -1,3 +1,5 @@
+@import '../../node_modules/@algolia/satellite/dist/satellite.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

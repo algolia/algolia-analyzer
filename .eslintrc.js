@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  extends: ['plugin:@algolia/satellite/recommended', 'prettier'],
-  plugins: ['@algolia/satellite', '@typescript-eslint', 'prettier'],
+  extends: ['plugin:@algolia/stl/recommended', 'prettier'],
+  plugins: ['@algolia/stl', '@typescript-eslint', 'prettier'],
   settings: {
     'import/resolver': {
       node: {
@@ -11,7 +11,7 @@ module.exports = {
       },
       typescript: {},
     },
-    satellite: {
+    stl: {
       tailwindConfigPath: path.resolve(__dirname, './tailwind.config.js'),
     },
     react: {

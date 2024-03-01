@@ -116,7 +116,7 @@ export const Page: FC = () => {
             variant="subtle"
             size="large"
             title="extension settings"
-            onClick={(): void => chrome.runtime.openOptionsPage()}
+            onClick={(): void => chrome.runtime.openOptionsPage(() => {})}
           />
         </header>
         <div className="h-[calc(100vh-3rem)] bg-grey-100 relative overflow-x-hidden">
