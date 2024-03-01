@@ -18,7 +18,7 @@ export const StatusCodeTag: FC<CustomTagProps & { statusCode: number }> = ({
   reversed,
   ...props
 }) => (
-  <Tag {...props} variant={getStatusColor(statusCode)}>
+  <Tag {...props} variant={getStatusColor(statusCode)} title="status code" placeholder={undefined}>
     {reversed && '!'}
     {statusCode}
   </Tag>
@@ -29,7 +29,7 @@ export const MethodTag: FC<CustomTagProps & { method: string }> = ({
   reversed,
   ...props
 }) => (
-  <Tag {...props}>
+  <Tag {...props} title="method" placeholder={undefined}>
     {reversed && '!'}
     {method}
   </Tag>
@@ -40,7 +40,7 @@ export const ClusterTag: FC<CustomTagProps & { cluster: string }> = ({
   reversed,
   ...props
 }) => (
-  <Tag {...props} variant="blue" title="cluster">
+  <Tag {...props} variant="blue" title="cluster" placeholder={undefined}>
     {reversed && '!'}
     {cluster}
   </Tag>
@@ -51,7 +51,7 @@ export const IndexTag: FC<CustomTagProps & { index: string | null }> = ({
   reversed,
   ...props
 }) => (
-  <Tag {...props} variant="accent" title="index">
+  <Tag {...props} variant="accent" title="index" placeholder={undefined}>
     {reversed && '!'}
     {index || 'no index'}
   </Tag>
@@ -62,7 +62,7 @@ export const ApiSubPathTag: FC<CustomTagProps & { subPath: string | null }> = ({
   reversed,
   ...props
 }) => (
-  <Tag {...props} variant="pink" title="api path">
+  <Tag {...props} variant="pink" title="api path" placeholder={undefined}>
     {reversed && '!'}
     {subPath || 'no API path'}
   </Tag>
@@ -80,7 +80,7 @@ const apiString: Record<ApiType, string> = {
 };
 
 export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (
-  <Tag {...props} variant="orange" title="API">
+  <Tag {...props} variant="orange" title="API" placeholder={undefined}>
     {reversed && '!'}
     {apiString[api]}
   </Tag>
