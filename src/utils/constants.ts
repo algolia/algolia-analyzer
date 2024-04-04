@@ -3,7 +3,7 @@ export const urlPattern = new URLPattern({
 });
 export const urlPattern2 = new URLPattern({
   hostname:
-    '(merchandising-staging|analytics|automation|query-categorization|re-ranking).*.algolia.com',
+    '(merchandising-staging|analytics|automation|query-categorization|re-ranking|neuralperso).*.algolia.com',
 });
 export const urlPattern3 = new URLPattern({
   hostname: '(beta-dashboard|dashboard).algolia.com',

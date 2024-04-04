@@ -6,7 +6,8 @@ export type ApiType =
   | 'merchandising'
   | 'query-categorization'
   | 're-ranking'
-  | 'search';
+  | 'search'
+  | 'neuralperso';
 
 export interface Request {
   id: string;
