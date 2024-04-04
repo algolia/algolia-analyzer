@@ -77,6 +77,7 @@ const apiString: Record<ApiType, string> = {
   're-ranking': 'reRanking',
   search: 'search',
   dashboard: 'dashboard',
+  neuralperso: 'neuralPerso',
 };
 
 export const ApiTag: FC<CustomTagProps & { api: ApiType }> = ({ api, reversed, ...props }) => (

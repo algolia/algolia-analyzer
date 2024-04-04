@@ -381,4 +381,39 @@ describe('getUrlData', () => {
       });
     });
   });
+
+  describe('neural perso', () => {
+    it('/config', () => {
+      expect(getUrlData(new URL('https://neuralperso.eu.algolia.com/1/config'))).toEqual({
+        api: 'neuralperso',
+        cluster: 'eu',
+        apiSubPath: 'config',
+        index: null,
+        queryStringParameters: {},
+        displayableUrl: 'neuralperso.eu.algolia.com/1/config',
+      });
+    });
+
+    it('/users', () => {
+      expect(getUrlData(new URL('https://neuralperso.eu.algolia.com/1/users?limit=10'))).toEqual({
+        api: 'neuralperso',
+        cluster: 'eu',
+        apiSubPath: 'users',
+        index: null,
+        queryStringParameters: { limit: '10' },
+        displayableUrl: 'neuralperso.eu.algolia.com/1/users',
+      });
+    });
+
+    it('/users/*', () => {
+      expect(getUrlData(new URL('https://neuralperso.eu.algolia.com/1/users/products'))).toEqual({
+        api: 'neuralperso',
+        cluster: 'eu',
+        apiSubPath: 'users',
+        index: 'products',
+        queryStringParameters: {},
+        displayableUrl: 'neuralperso.eu.algolia.com/1/users/products',
+      });
+    });
+  });
 });

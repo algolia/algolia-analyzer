@@ -40,6 +40,10 @@ const getApiPathCluster = (url: URL): Pick<UrlData, 'api' | 'cluster'> & { apiPa
     api = 'insights';
   }
 
+  if (url.host.startsWith('neuralperso')) {
+    api = 'neuralperso';
+  }
+
   if (cluster === api) {
     cluster = country;
   }
@@ -106,7 +110,8 @@ const getIndexAndSubPath = (
     case 're-ranking':
     case 'merchandising':
     case 'insights':
-    case 'automation': {
+    case 'automation':
+    case 'neuralperso': {
       const { array, item } = spliceItemAt(apiPathParts, 1, null);
       apiSubPath = array.join('/');
       index = item ?? queryStringParameters.index ?? null;
